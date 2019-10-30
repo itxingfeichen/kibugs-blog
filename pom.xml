@@ -8,6 +8,7 @@
     <description>The demo module of dubbo project</description>
     <properties>
         <skip_maven_deploy>true</skip_maven_deploy>
+        <mybatis-plus.version>3.2.0</mybatis-plus.version>
     </properties>
     <modules>
         <module>kibugs-interface</module>
@@ -69,6 +70,11 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus.version}</version>
         </dependency>
     </dependencies>
     <build>

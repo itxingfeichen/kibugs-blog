@@ -7,10 +7,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 
 @EnableAutoConfiguration
 @MapperScan(basePackages = "com.dubbo.example.mapper")
-public class DubboProviderBootstrap {
+public class KiBugsProviderBootstrap {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(DubboProviderBootstrap.class)
+        new SpringApplicationBuilder(KiBugsProviderBootstrap.class)
                 .run(args);
     }
 }
