@@ -1,0 +1,42 @@
+# Spring boot application
+spring:
+  application:
+    name: dubbo-auto-configuration-provider-demo
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.22.128:3306/i18n
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.github.xfc.i18n.model
+  #  typeEnumsPackage: com.baomidou.springboot.entity.enums
+  global-config:
+    # 数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: AUTO
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: IGNORED
+      #驼峰下划线转换
+      column-underline: true
+      #数据库大写下划线转换
+      #capital-mode: true
+      #逻辑删除配置
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      db-type: mysql
+    #刷新mapper 调试神器
+    refresh: true
+dubbo:
+  application:
+    name: ${spring.application.name}
+  scan:
+    base-packages: com.dubbo.example.provider
+  protocol:
+    name: dubbo
+    port: 12345
+  registry:
+    address: zookeeper://192.168.22.128:2181
