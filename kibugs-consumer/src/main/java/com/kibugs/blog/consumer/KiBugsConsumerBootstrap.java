@@ -1,9 +1,8 @@
 package com.kibugs.blog.consumer;
 
 import com.kibugs.blog.api.DemoService;
-
+import com.kibugs.blog.api.KbBlogDubboService;
 import org.apache.dubbo.config.annotation.Reference;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationRunner;
@@ -18,8 +17,10 @@ public class KiBugsConsumerBootstrap {
 
 
     @Reference(version = "1.0.0")
-
     private DemoService demoService;
+    @Reference(version = "1.0.0")
+    private KbBlogDubboService kbBlogDubboService;
+
 
     public static void main(String[] args) {
         SpringApplication.run(KiBugsConsumerBootstrap.class).close();
@@ -27,6 +28,8 @@ public class KiBugsConsumerBootstrap {
 
     @Bean
     public ApplicationRunner runner() {
+        System.out.println("iKbBlogService.getById(1) = " + kbBlogDubboService.getOne(1L));
         return args -> logger.info(demoService.sayHello("Provider"));
+//        return null;
     }
 }

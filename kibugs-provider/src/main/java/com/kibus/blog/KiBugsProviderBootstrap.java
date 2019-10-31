@@ -1,12 +1,12 @@
 package com.kibus.blog;
 
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 
-@EnableAutoConfiguration
-@MapperScan(basePackages = "com.dubbo.example.mapper")
+@SpringBootApplication
+@MapperScan(basePackages = "com.kibus.blog.mapper")
 public class KiBugsProviderBootstrap {
 
     public static void main(String[] args) {

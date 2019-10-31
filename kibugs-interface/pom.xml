@@ -14,6 +14,14 @@
     <properties>
         <skip_maven_deploy>true</skip_maven_deploy>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.kibugs</groupId>
+            <artifactId>kibugs-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
     <build>
     <plugins>
         <plugin>

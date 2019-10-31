@@ -5,7 +5,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://192.168.22.128:3306/i18n
+    url: jdbc:mysql://192.168.22.128:3306/kibugs-blog
     driver-class-name: com.mysql.cj.jdbc.Driver
 #mybatis
 mybatis-plus:
@@ -34,7 +34,7 @@ dubbo:
   application:
     name: ${spring.application.name}
   scan:
-    base-packages: com.dubbo.example.provider
+    base-packages: com.kibus.blog.provider
   protocol:
     name: dubbo
     port: 12345
