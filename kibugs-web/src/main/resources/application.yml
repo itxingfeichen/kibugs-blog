@@ -1,6 +1,12 @@
 spring:
   application:
     name: kibugs-web
+  http:
+    encoding:
+      force: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 dubbo:
   application: ${spring.application.name}
   registry:

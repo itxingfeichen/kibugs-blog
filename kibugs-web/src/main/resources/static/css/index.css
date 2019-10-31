@@ -1,0 +1,163 @@
+body {
+    background: url("../images/bg.png") !important;
+}
+.ki-padded {
+    padding: 1em !important;
+}
+.ki-padded-mini {
+    padding: 0.2em !important;
+}
+
+.ki-padded-tiny {
+    padding: 0.3em !important;
+}
+
+.ki-padded-tb-mini {
+    padding-top: 0.2em !important;
+    padding-bottom: 0.2em !important;
+}
+
+.ki-padded-tb-tiny {
+    padding-top: 0.3em !important;
+    padding-bottom: 0.3em !important;
+}
+
+.ki-padded-tb-small {
+    padding-top: 0.5em !important;
+    padding-bottom: 0.5em !important;
+}
+
+.ki-padded-tb {
+    padding-top: 1em !important;
+    padding-bottom: 1em !important;
+}
+
+.ki-padded-tb-large {
+    padding-top: 2em !important;
+    padding-bottom: 2em !important;
+}
+
+.ki-padded-tb-big {
+    padding-top: 3em !important;
+    padding-bottom: 3em !important;
+}
+
+.ki-padded-tb-huge {
+    padding-top: 5em !important;
+    padding-bottom: 5em !important;
+}
+
+
+.ki-padded-tb-massive {
+    padding-top: 4em !important;
+    padding-bottom: 4em !important;
+}
+
+.ki-padded-tb-tiny {
+    margin-top: 0.3em !important;
+    margin-bottom: 0.3em !important;
+}
+
+.ki-padded-lr-response {
+    padding-left: 3em !important;
+    padding-right: 3em !important;
+}
+
+.ki-text {
+    font-weight: 300 !important;
+    letter-spacing: 1px !important;
+}
+
+.ki-text-thin {
+    font-weight: 300 !important;
+}
+
+.ki-text-spaced {
+    letter-spacing: 1px !important;
+}
+
+.ki-text-lined {
+    line-height: 1.8 !important;
+}
+
+.ki-opacity-mini {
+    opacity: 0.6 !important;
+}
+
+.ki-opacity-tiny {
+    opacity: 0.4 !important;
+}
+
+.ki-text-block {
+    display: inline-block !important;
+}
+
+.ki-container {
+    max-width: 72em !important;
+    margin: auto !important;
+}
+
+.ki-container-small {
+    max-width: 60em !important;
+    margin: auto !important;
+}
+
+.ki-sidebar-position {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.ki-mobile-show {
+    display: none !important;
+}
+
+.ki-margin-bottom-tiny {
+    margin-bottom: 0.3em !important;
+
+}
+
+.ki-margin-bottom-small {
+    margin-bottom: 0.5em !important;
+}
+
+.ki-shadow-small {
+    /*浏览器私有属性，为了适配使用*/
+    -webkit-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.ki-fixed{
+    position: fixed !important;
+    z-index: 10 !important;
+}
+.ki-right-bottom{
+    bottom: 0 !important;
+    right: 0 !important;
+}
+
+
+@media screen and (max-width: 768px) {
+    .ki-mobile-hide {
+        display: none !important;
+    }
+
+    .ki-mobile-show {
+        display: block !important;
+    }
+
+    .ki-padded-lr-response {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .ki-padded-lr-clear {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .ki-mobile-wide {
+        width: 100% !important;
+    }
+
+}

@@ -5,6 +5,7 @@ import com.kibugs.blog.web.service.KiBugsBlogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * @author：jannik
@@ -27,5 +28,11 @@ public class KiBugsBlogController {
     @ResponseBody
     public KbBlogDTO getBlogById(Long id){
         return kiBugsBlogService.getBlogById(id);
+    }
+
+    @RequestMapping("index")
+    public ModelAndView index(){
+
+        return new ModelAndView("/index");
     }
 }
