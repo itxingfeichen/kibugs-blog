@@ -1,4 +1,4 @@
-package com.kibus.blog.provider;
+package com.kibus.blog.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kibus.blog.entity.KbBlog;

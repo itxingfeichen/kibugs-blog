@@ -1,6 +1,8 @@
 package com.kibus.blog.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -8,7 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *  博客
  * </p>
  *
  * @author jannik
@@ -16,6 +18,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Accessors(chain = true)
+@TableName("kb_blog")
 public class KbBlog {
 
     private static final long serialVersionUID=1L;
@@ -62,6 +65,9 @@ public class KbBlog {
      * 分类ID
      */
     private Long categoryId;
+
+    @TableLogic
+    private Integer deleteStatus;
 
     /**
      * 发布时间

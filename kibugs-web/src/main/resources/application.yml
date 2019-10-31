@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: kibugs-web
+dubbo:
+  application: ${spring.application.name}
+  registry:
+    address: zookeeper://192.168.22.128:2181
