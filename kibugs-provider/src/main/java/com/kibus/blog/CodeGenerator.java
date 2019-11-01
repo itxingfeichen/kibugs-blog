@@ -58,7 +58,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.kibugs.common");
+        pc.setParent("com.kibus");
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -127,6 +127,8 @@ public class CodeGenerator {
         mpg.setStrategy(strategy);
 //        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
+
+
     }
 
 }
