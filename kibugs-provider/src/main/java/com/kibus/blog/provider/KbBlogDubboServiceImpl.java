@@ -2,11 +2,14 @@ package com.kibus.blog.provider;
 
 import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibugs.blog.api.KbBlogDubboService;
+import com.kibugs.blog.response.CommonResponse;
 import com.kibus.blog.entity.KbBlog;
 import com.kibus.blog.service.IKbBlogService;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static com.kibus.blog.utils.ResponseUtil.success;
 
 /**
  * @author : chenxingfei
@@ -20,13 +23,13 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
     private IKbBlogService blogService;
 
     @Override
-    public KbBlogDTO getOne(Long id) {
+    public CommonResponse<KbBlogDTO> getOne(Long id) {
         KbBlog kbBlog = blogService.getById(id);
         if (kbBlog != null) {
             KbBlogDTO kbBlogDTO = new KbBlogDTO();
             BeanUtils.copyProperties(kbBlog,kbBlogDTO);
-            return kbBlogDTO;
+            return success();
         }
-        return null;
+        return success();
     }
 }

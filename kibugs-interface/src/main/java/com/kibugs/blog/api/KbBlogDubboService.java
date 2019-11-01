@@ -1,6 +1,7 @@
 package com.kibugs.blog.api;
 
 import com.kibug.blog.common.dto.KbBlogDTO;
+import com.kibugs.blog.response.CommonResponse;
 
 /**
  * @author : chenxingfei
@@ -9,5 +10,5 @@ import com.kibug.blog.common.dto.KbBlogDTO;
  */
 public interface KbBlogDubboService {
 
-    KbBlogDTO getOne(Long id);
+    CommonResponse<KbBlogDTO> getOne(Long id);
 }
