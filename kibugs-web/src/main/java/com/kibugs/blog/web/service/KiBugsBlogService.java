@@ -3,7 +3,7 @@ package com.kibugs.blog.web.service;
 import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibugs.blog.api.DemoService;
 import com.kibugs.blog.api.KbBlogDubboService;
-import com.kibugs.blog.response.CommonResponse;
+import com.kibugs.blog.common.CommonResponse;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Service;
 

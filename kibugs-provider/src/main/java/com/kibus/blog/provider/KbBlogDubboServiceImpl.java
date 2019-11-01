@@ -2,14 +2,12 @@ package com.kibus.blog.provider;
 
 import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibugs.blog.api.KbBlogDubboService;
-import com.kibugs.blog.response.CommonResponse;
+import com.kibugs.blog.common.CommonResponse;
 import com.kibus.blog.entity.KbBlog;
 import com.kibus.blog.service.IKbBlogService;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static com.kibus.blog.utils.ResponseUtil.success;
 
 /**
  * @author : chenxingfei

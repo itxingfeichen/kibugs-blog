@@ -1,4 +1,4 @@
-package com.kibugs.blog.response;
+package com.kibugs.blog.common;
 
 import lombok.Builder;
 import lombok.Data;

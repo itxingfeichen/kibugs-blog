@@ -1,7 +1,7 @@
 package com.kibugs.blog.api;
 
 import com.kibug.blog.common.dto.KbBlogDTO;
-import com.kibugs.blog.response.CommonResponse;
+import com.kibugs.blog.common.CommonResponse;
 
 /**
  * @author : chenxingfei
