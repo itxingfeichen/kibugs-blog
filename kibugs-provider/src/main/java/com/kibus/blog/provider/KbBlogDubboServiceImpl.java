@@ -27,9 +27,9 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
         KbBlog kbBlog = blogService.getById(id);
         if (kbBlog != null) {
             KbBlogDTO kbBlogDTO = new KbBlogDTO();
-            BeanUtils.copyProperties(kbBlog,kbBlogDTO);
-            return success();
+            BeanUtils.copyProperties(kbBlog, kbBlogDTO);
+            return CommonResponse.<KbBlogDTO>builder().success(true).data(kbBlogDTO).build();
         }
-        return success();
+        return CommonResponse.<KbBlogDTO>builder().success(true).build();
     }
 }
