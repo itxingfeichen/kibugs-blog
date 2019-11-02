@@ -1,18 +1,21 @@
 package com.kibus.blog.provider;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibug.blog.common.entity.KbBlog;
+import com.kibug.blog.common.entity.KbCustomer;
 import com.kibugs.blog.api.KbBlogDubboService;
 import com.kibugs.blog.common.CommonResponse;
 import com.kibus.blog.service.IKbBlogService;
+import com.kibus.blog.service.IKbCategoryService;
 import com.kibus.blog.service.IKbCustomerService;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author : chenxingfei
@@ -22,11 +25,17 @@ import java.util.List;
 @Service(version = "1.0.0")
 public class KbBlogDubboServiceImpl implements KbBlogDubboService {
 
-    @Autowired
-    private IKbBlogService blogService;
+    private final IKbBlogService blogService;
 
-    @Autowired
-    private IKbCustomerService customerService;
+    private final IKbCustomerService customerService;
+
+    private final IKbCategoryService iKbCategoryService;
+
+    public KbBlogDubboServiceImpl(IKbBlogService blogService, IKbCustomerService customerService, IKbCategoryService iKbCategoryService) {
+        this.blogService = blogService;
+        this.customerService = customerService;
+        this.iKbCategoryService = iKbCategoryService;
+    }
 
     @Override
     public CommonResponse<KbBlogDTO> getOne(Long id) {
@@ -46,8 +55,12 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
         if (CollectionUtils.isEmpty(records)) {
             return CommonResponse.<IPage<KbBlog>>builder().build();
         }
-        // 封装用户信息
-        records.forEach(kbBlog -> kbBlog.setKbCustomer(customerService.getById(kbBlog.getCustomerId())));
+        // 封装用户信息以及分类信息
+        records.forEach(kbBlog -> {
+            KbCustomer customer = customerService.getOne(Wrappers.<KbCustomer>lambdaQuery().select(KbCustomer.class, info -> Objects.equals(info.getColumn(), "nickname") || Objects.equals(info.getColumn(), "avatar_url")).eq(KbCustomer::getId, kbBlog.getCustomerId()));
+            kbBlog.setCustomer(customer);
+            kbBlog.setCategory(iKbCategoryService.getById(kbBlog.getCategoryId()));
+        });
         return CommonResponse.<IPage<KbBlog>>builder().data(iPage).build();
     }
 

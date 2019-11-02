@@ -15,8 +15,8 @@
 <div class="ki-padded-tb-large ki-container">
     <div class="ui container ki-shadow-small">
         <div class="ui stackable grid">
+            <!--左边内容部分-->
             <div class="eleven wide column">
-                <!--左部分-->
                 <div class="ui top attached segment ">
                     <div class="ui middle aligned two column grid">
                         <div class="column">
@@ -32,41 +32,36 @@
                     <div class="ui padded segment vertical ki-padded-tb-large ki-padded-lr-response ki-padded-tb-large ki-padded-lr-clear" th:each="blog : ${page.records}">
                         <div class="ui mobile reversed stackable grid">
                             <div class="eleven wide column">
-                                <h3 class="ui header" th:text="${blog.title}">标题</h3>
-                                <p class="ki-text">昨天，35岁的表姐把我拉黑了。
-                                    表姐是医院有名的好护士，脾气好，耐心足，对谁都笑眯眯。
-                                    最近小半年，他们医院在搞评职称，指标之一就是护士的论文发布情况。
-                                    得知消息后，表姐开始着手发布职称论文，与此同时，我的噩梦也来了。
-                                    获得授权，非商业转载请注明出处。
+                                <h3 class="ui header"><a href="@{/blog/detail/{id}(id=${blog.id})}" class="header"  th:text="${blog.title}">标题</a></h3>
+                                <p class="ki-text" th:text="|${blog.description}......|">概述
                                 </p>
                                 <div class="ui stackable  grid">
                                     <div class="eleven wide column">
                                         <div class="ui horizontal link list mini">
                                             <div class="item">
-                                                <img src="https://picsum.photos/seed/picsum/100/100" alt=""
-                                                     class="ui avatar image">
+                                                <img th:src="@{${blog.customer.avatarUrl}}" alt="头像地址" class="ui avatar image">
                                                 <div class="content">
-                                                    <a href="#" class="header">kibugs</a>
+                                                    <a href="#" class="header" th:text="${blog.customer.nickname}">kibugs</a>
                                                 </div>
                                             </div>
                                             <div class="item">
-                                                <i class="calendar icon"></i>2019-19-25
+                                                <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}"></span>
                                             </div>
                                             <div class="item">
-                                                <i class="eye icon"></i>2343
+                                                <i class="eye icon"></i><span th:text="${blog.views}"></span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="right aligned ui five wide column">
-                                        <a href="#" class="ui teal basic label ki-padded-tiny ki-text-thin">认知升级</a>
+                                        <a href="#" class="ui teal basic label ki-padded-tiny ki-text-thin" th:text="${blog.category.name}">认知升级</a>
                                     </div>
+
                                 </div>
 
                             </div>
                             <div class="ui five wide column">
-                                <a href="#" target="_blank">
-                                    <img src="https://picsum.photos/seed/picsum/800/450" alt=""
-                                         class="ui rounded image">
+                                <a href="@{/blog/detail/{id}(id=${blog.id})}" target="_blank">
+                                    <img th:src="@{${blog.firstImageUrl}}" alt="" class="ui rounded image ki-padded-tb-big ki-text-thin" style="">
                                 </a>
 
                             </div>
@@ -97,13 +92,12 @@
                     </div>
                     <div class="ui teal segment">
                         <div class="ui fluid vertical menu">
-                            <a href="#" class="item" th:each="type : ${types}">
+                           <!-- <a href="#" class="item" th:each="type : ${types}">
                                 <span th:text="${type.name}">学习日志</span>
                                 <div class="ui teal basic left pointing label" th:text="${#arrays.length(type.blogs)}">
                                     13
                                 </div>
-                            </a>
-                            <!--/*-->
+                            </a>-->
                             <a href="#" class="item">
                                 思考与感悟
                                 <div class="ui teal basic left pointing label">13</div>
@@ -124,7 +118,6 @@
                                 学习日志
                                 <div class="ui teal basic left pointing label">13</div>
                             </a>
-                            <!--*/-->
                         </div>
                     </div>
                 </div>
@@ -146,15 +139,6 @@
                             <span>方法论</span>
                             <div class="detail">23</div>
                         </a>
-                        <!--/*-->
-                        <a href="#" target="_blank" class="ui teal basic left pointing label ki-padded-tb-tiny">
-                            论
-                            <div class="detail">23</div>
-                        </a>
-                        <a href="#" target="_blank" class="ui teal basic left pointing label ki-padded-tb-tiny">
-                            论
-                            <div class="detail">23</div>
-                        </a>
                         <a href="#" target="_blank" class="ui teal basic left pointing label ki-padded-tb-tiny">
                             方法论
                             <div class="detail">23</div>
@@ -183,7 +167,14 @@
                             方法论
                             <div class="detail">23</div>
                         </a>
-                        <!--*/-->
+                        <a href="#" target="_blank" class="ui teal basic left pointing label ki-padded-tb-tiny">
+                            方法论
+                            <div class="detail">23</div>
+                        </a>
+                        <a href="#" target="_blank" class="ui teal basic left pointing label ki-padded-tb-tiny">
+                            方法论
+                            <div class="detail">23</div>
+                        </a>
                     </div>
                 </div>
 

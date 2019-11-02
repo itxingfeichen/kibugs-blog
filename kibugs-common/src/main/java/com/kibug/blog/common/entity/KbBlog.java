@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -34,9 +34,9 @@ public class KbBlog implements Serializable {
     private String title;
 
     /**
-     * 博客内容
+     * 博客内容(概述)
      */
-    private String context;
+    private String description;
 
     /**
      * 发布状态（1：已发布，0：待发布）
@@ -68,29 +68,42 @@ public class KbBlog implements Serializable {
      */
     private Long categoryId;
 
+    /**
+     * 删除标记
+     */
     @TableLogic
     private Integer deleteStatus;
 
     /**
+     * 查看次数
+     */
+    private Integer views;
+
+    /**
      * 发布时间
      */
-    private LocalDateTime publishTime;
+    private Date publishTime;
 
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
     /**
      * 发布用户信息
      */
     @TableField(exist = false)
-    private KbCustomer kbCustomer;
+    private KbCustomer customer;
 
+    /**
+     * 分类
+     */
+    @TableField(exist = false)
+    private KbCategory category;
 
 }

@@ -3,7 +3,7 @@ package com.kibug.blog.common.dto;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -63,17 +63,17 @@ public class KbBlogDTO implements Serializable {
     /**
      * 发布时间
      */
-    private LocalDateTime publishTime;
+    private Date publishTime;
 
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
 
 }
