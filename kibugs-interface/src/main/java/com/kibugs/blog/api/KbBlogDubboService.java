@@ -1,6 +1,8 @@
 package com.kibugs.blog.api;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.kibug.blog.common.dto.KbBlogDTO;
+import com.kibug.blog.common.entity.KbBlog;
 import com.kibugs.blog.common.CommonResponse;
 
 /**
@@ -10,5 +12,18 @@ import com.kibugs.blog.common.CommonResponse;
  */
 public interface KbBlogDubboService {
 
+    /**
+     * 根据id获取博客数据
+     * @param id
+     * @return
+     */
     CommonResponse<KbBlogDTO> getOne(Long id);
+
+
+    /**
+     * 获取首页分页数据
+     * @param page
+     * @return
+     */
+    CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page);
 }

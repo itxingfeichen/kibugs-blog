@@ -1,7 +1,7 @@
 package com.kibus.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.kibus.blog.entity.KbBlog;
+import com.kibug.blog.common.entity.KbBlog;
 
 /**
  * <p>

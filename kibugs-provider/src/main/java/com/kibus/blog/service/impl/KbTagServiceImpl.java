@@ -1,6 +1,6 @@
 package com.kibus.blog.service.impl;
 
-import com.kibus.blog.entity.KbTag;
+import com.kibug.blog.common.entity.KbTag;
 import com.kibus.blog.mapper.KbTagMapper;
 import com.kibus.blog.service.IKbTagService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

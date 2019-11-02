@@ -1,6 +1,6 @@
 package com.kibus.blog.service;
 
-import com.kibus.blog.entity.KbComment;
+import com.kibug.blog.common.entity.KbComment;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

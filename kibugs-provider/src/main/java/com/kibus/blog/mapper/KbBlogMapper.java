@@ -1,7 +1,7 @@
 package com.kibus.blog.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.kibus.blog.entity.KbBlog;
+import com.kibug.blog.common.entity.KbBlog;
 
 /**
  * <p>

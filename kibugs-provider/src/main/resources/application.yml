@@ -13,7 +13,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:/mapper/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: ccom.kibus.blog.entity
+  typeAliasesPackage: com.kibug.blog.common.entity
   #  typeEnumsPackage: com.baomidou.springboot.entity.enums
   global-config:
     # 数据库相关配置

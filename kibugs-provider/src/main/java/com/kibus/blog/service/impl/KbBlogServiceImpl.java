@@ -1,7 +1,7 @@
 package com.kibus.blog.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.kibus.blog.entity.KbBlog;
+import com.kibug.blog.common.entity.KbBlog;
 import com.kibus.blog.mapper.KbBlogMapper;
 import com.kibus.blog.service.IKbBlogService;
 import org.springframework.stereotype.Service;

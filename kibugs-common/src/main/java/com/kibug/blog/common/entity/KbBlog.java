@@ -1,16 +1,18 @@
-package com.kibus.blog.entity;
+package com.kibug.blog.common.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * <p>
- *  博客
+ * 博客
  * </p>
  *
  * @author jannik
@@ -19,9 +21,9 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @TableName("kb_blog")
-public class KbBlog {
+public class KbBlog implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
     @TableId
     private Long id;
@@ -83,6 +85,12 @@ public class KbBlog {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    /**
+     * 发布用户信息
+     */
+    @TableField(exist = false)
+    private KbCustomer kbCustomer;
 
 
 }

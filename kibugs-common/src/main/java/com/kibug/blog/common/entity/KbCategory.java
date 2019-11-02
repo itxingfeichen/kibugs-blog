@@ -1,14 +1,15 @@
-package com.kibus.blog.entity;
+package com.kibug.blog.common.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * <p>
- * 标签表
+ * 分类表
  * </p>
  *
  * @author jannik
@@ -17,18 +18,32 @@ import java.time.LocalDateTime;
 @Data
 
 @Accessors(chain = true)
-public class KbTag {
+public class KbCategory implements Serializable {
 
     private static final long serialVersionUID=1L;
 
+    @TableId
+    private Long id;
+
+    /**
+     * 分类名称
+     */
     private String name;
 
+    /**
+     * 备注
+     */
     private String remark;
 
     /**
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
 
 
 }

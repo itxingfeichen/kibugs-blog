@@ -1,6 +1,6 @@
 package com.kibus.blog.mapper;
 
-import com.kibus.blog.entity.KbBlogCategory;
+import com.kibug.blog.common.entity.KbBlogCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

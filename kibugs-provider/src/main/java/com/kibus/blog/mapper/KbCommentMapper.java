@@ -1,6 +1,6 @@
 package com.kibus.blog.mapper;
 
-import com.kibus.blog.entity.KbComment;
+import com.kibug.blog.common.entity.KbComment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

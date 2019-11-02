@@ -1,6 +1,9 @@
 package com.kibugs.blog.web.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kibug.blog.common.dto.KbBlogDTO;
+import com.kibug.blog.common.entity.KbBlog;
 import com.kibugs.blog.api.DemoService;
 import com.kibugs.blog.api.KbBlogDubboService;
 import com.kibugs.blog.common.CommonResponse;
@@ -25,6 +28,18 @@ public class KiBugsBlogService {
     public KbBlogDTO getBlogById(Long id) {
         CommonResponse<KbBlogDTO> one = kbBlogDubboService.getOne(id);
         return one.getData();
+    }
+
+    /**
+     * 分页获取首页数据
+     * @param current
+     * @param size
+     * @return
+     */
+    public IPage<KbBlog> indexPage(long current,long size){
+        IPage<KbBlog> page = new Page<>(current,size);
+        CommonResponse<IPage<KbBlog>> commonResponse = kbBlogDubboService.indexPage(page);
+        return commonResponse.getData();
     }
 
 }

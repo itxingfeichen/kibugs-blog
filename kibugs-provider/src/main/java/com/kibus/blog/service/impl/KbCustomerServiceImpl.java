@@ -1,6 +1,6 @@
 package com.kibus.blog.service.impl;
 
-import com.kibus.blog.entity.KbCustomer;
+import com.kibug.blog.common.entity.KbCustomer;
 import com.kibus.blog.mapper.KbCustomerMapper;
 import com.kibus.blog.service.IKbCustomerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

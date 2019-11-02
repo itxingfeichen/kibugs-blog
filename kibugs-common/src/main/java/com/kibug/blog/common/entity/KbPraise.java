@@ -1,8 +1,10 @@
-package com.kibus.blog.entity;
+package com.kibug.blog.common.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -16,9 +18,12 @@ import java.time.LocalDateTime;
 @Data
 
 @Accessors(chain = true)
-public class KbPraise {
+public class KbPraise implements Serializable {
 
     private static final long serialVersionUID=1L;
+
+    @TableId
+    private Long id;
 
     /**
      * 被评论项目id（根据type区分，type为COMMENT则为评论id，type为BLOG则为博客id）

@@ -1,9 +1,11 @@
-package com.kibus.blog.entity;
+package com.kibug.blog.common.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -17,9 +19,12 @@ import java.time.LocalDateTime;
 @Data
 @Accessors(chain = true)
 @TableName("kb_blog_category")
-public class KbBlogCategory {
+public class KbBlogCategory implements Serializable {
 
     private static final long serialVersionUID=1L;
+
+    @TableId
+    private Long id;
 
     /**
      * 博客id

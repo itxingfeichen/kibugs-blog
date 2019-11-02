@@ -1,10 +1,11 @@
-package com.kibus.blog.entity;
+package com.kibug.blog.common.entity;
 
-import java.time.LocalDateTime;
-
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -17,9 +18,12 @@ import lombok.experimental.Accessors;
 @Data
 
 @Accessors(chain = true)
-public class KbCustomer {
+public class KbCustomer implements Serializable {
 
     private static final long serialVersionUID=1L;
+
+    @TableId
+    private Long id;
 
     /**
      * 手机号
