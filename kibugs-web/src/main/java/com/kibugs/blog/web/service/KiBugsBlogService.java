@@ -18,6 +18,7 @@ public class KiBugsBlogService {
 
     @Reference(version = "1.0.0")
     private DemoService demoService;
+
     @Reference(version = "1.0.0")
     private KbBlogDubboService kbBlogDubboService;
 

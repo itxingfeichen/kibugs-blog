@@ -1,7 +1,7 @@
 package com.kibus.blog.entity;
 
 import java.time.LocalDateTime;
-import com.baomidou.ant.common.BaseEntity;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
