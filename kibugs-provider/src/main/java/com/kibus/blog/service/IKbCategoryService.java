@@ -1,7 +1,10 @@
 package com.kibus.blog.service;
 
-import com.kibug.blog.common.entity.KbCategory;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.kibug.blog.common.entity.KbCategory;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -12,5 +15,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-11-01
  */
 public interface IKbCategoryService extends IService<KbCategory> {
+    /**
+     * 获取top5分类（默认返回博客数量最多的5种分类）
+     * @return
+     */
+    List<Map<String,Integer>> getCategoryTop5();
 
 }

@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-public class CommonResponse<T extends Serializable> implements Serializable {
+public class CommonResponse<T> implements Serializable {
 
     /**
      * 错误码

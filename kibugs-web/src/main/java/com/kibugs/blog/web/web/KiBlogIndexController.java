@@ -1,9 +1,7 @@
 package com.kibugs.blog.web.web;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.kibug.blog.common.entity.KbBlog;
+import com.kibugs.blog.web.service.KbCategoryService;
 import com.kibugs.blog.web.service.KiBugsBlogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,10 +15,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class KiBlogIndexController {
 
+    private final KiBugsBlogService kiBugsBlogService;
 
-    @Autowired
-    private KiBugsBlogService kiBugsBlogService;
+    private final KbCategoryService categoryService;
 
+    public KiBlogIndexController(KiBugsBlogService kiBugsBlogService, KbCategoryService categoryService) {
+        this.kiBugsBlogService = kiBugsBlogService;
+        this.categoryService = categoryService;
+    }
 
     /**
      * 首页
@@ -29,8 +31,8 @@ public class KiBlogIndexController {
     @RequestMapping("index")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/index");
-        IPage<KbBlog> page = kiBugsBlogService.indexPage(1, 20);
-        modelAndView.addObject("page",page);
+        modelAndView.addObject("page",kiBugsBlogService.indexPage(1, 20));
+        modelAndView.addObject("categoryTop5",categoryService.getCategoryTop5());
         return modelAndView;
     }
 

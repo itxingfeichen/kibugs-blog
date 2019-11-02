@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibug.blog.common.entity.KbBlog;
-import com.kibugs.blog.api.DemoService;
 import com.kibugs.blog.api.KbBlogDubboService;
 import com.kibugs.blog.common.CommonResponse;
 import org.apache.dubbo.config.annotation.Reference;
@@ -18,9 +17,6 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class KiBugsBlogService {
-
-    @Reference(version = "1.0.0")
-    private DemoService demoService;
 
     @Reference(version = "1.0.0")
     private KbBlogDubboService kbBlogDubboService;

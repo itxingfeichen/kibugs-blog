@@ -92,13 +92,13 @@
                     </div>
                     <div class="ui teal segment">
                         <div class="ui fluid vertical menu">
-                           <!-- <a href="#" class="item" th:each="type : ${types}">
-                                <span th:text="${type.name}">学习日志</span>
-                                <div class="ui teal basic left pointing label" th:text="${#arrays.length(type.blogs)}">
+                            <a href="#" class="item" th:each="category : ${categoryTop5}">
+                                <span th:text="${category.name}">学习日志</span>
+                                <div class="ui teal basic left pointing label" th:text="${category.num}">
                                     13
                                 </div>
-                            </a>-->
-                            <a href="#" class="item">
+                            </a>
+                            <!--<a href="#" class="item">
                                 思考与感悟
                                 <div class="ui teal basic left pointing label">13</div>
                             </a>
@@ -117,7 +117,7 @@
                             <a href="#" class="item">
                                 学习日志
                                 <div class="ui teal basic left pointing label">13</div>
-                            </a>
+                            </a>-->
                         </div>
                     </div>
                 </div>
