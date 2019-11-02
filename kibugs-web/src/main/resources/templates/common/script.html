@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<!--header-->
 <head th:fragment="common_header(title,links)">
     <meta charset="UTF-8">
     <title th:replace="${title}">title</title>
@@ -13,9 +13,72 @@
     <th:block th:replace="${links}"/>
 </head>
 
-
+<!--footer js 引入-->
 <th:block th:fragment="common_script">
     <script th:src="@{https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js}"></script>
     <script th:src="@{https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js}"></script>
 </th:block>
+
+<!--导航部分-->
+<div th:fragment="nav">
+    <nav class="ui inverted attached segment ki-padded-tb-mini">
+        <div class="ui container">
+            <div class="ui inverted secondary stackable menu">
+                <img src="/images/favicon.ico" class="ui rounded image" style="width: 20px;height: 20px;margin-top: 10px">
+<!--                <h2 class="ui teal header item">kibugs</h2>-->
+                <a href="index.html" class="item ki-mobile-hide"><i class="home mini icon"></i>首页</a>
+                <a href="category.html" class="item ki-mobile-hide"><i class="idea mini icon"></i>分类</a>
+                <a href="tags.html" class="item ki-mobile-hide"><i class="tags mini icon"></i>标签</a>
+                <a href="archives.html" class="item ki-mobile-hide"><i class="clone mini icon"></i>归档</a>
+                <a href="aboutme.html" class="item ki-mobile-hide"><i class="info mini icon"></i>关于我</a>
+                <div class="right menu">
+                    <div class="item ki-mobile-hide">
+                        <div class="ui transparent inverted icon input">
+                            <i class="search link icon"></i>
+                            <input type="text" placeholder="Search">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="" class="ui black icon button ki-sidebar-position ki-mobile-show">
+            <i class="icon sidebar"></i>
+        </a>
+    </nav>
+</div>
+
+<!--低部介绍-->
+<footer th:fragment="footer" class="ui inverted segment vertical ki-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid">
+            <div class="three wide column">
+                <img src="/images/WechatIMG.jpeg" class="ui rounded image" style="width: 110px;height: 110px">
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">博客介绍</h4>
+                <div class="ui inverted link list">
+                    <a href="" class="item ki-text-thin ki-text-spaced ki-opacity-mini">用户故事</a>
+                    <a href="" class="item ki-text-thin ki-text-spaced ki-opacity-mini">用户故事</a>
+                    <a href="" class="item ki-text-thin ki-text-spaced ki-opacity-mini">用户故事</a>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header">联系我</h4>
+                <div class="ui inverted link list">
+                    <a href="" class="item item ki-text-thin ki-text-spaced ki-opacity-mini">xingfeichen@163.com</a>
+                    <a href="" class="item item ki-text-thin ki-text-spaced ki-opacity-mini">qq:1151590116</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header">介绍</h4>
+                <p class="ki-text-thin ki-text-spaced ki-opacity-mini">
+                    对方很快就啊还记得反馈黑无法能看见部对方很快就啊对方很快就啊还记得反馈黑无法能看见部分进口好看的少女风快还记得反馈黑无法能看见部分进口好看的少女风快分进口好看的少女风快</p>
+
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="ki-text-thin ki-text-spaced ki-opacity-tiny">© 2019 kibugs.com 版权所有 ICP证：浙B2-20191021</p>
+    </div>
+</footer>
+
 </html>
