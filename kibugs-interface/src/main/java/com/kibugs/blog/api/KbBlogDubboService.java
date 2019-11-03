@@ -5,6 +5,8 @@ import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibug.blog.common.entity.KbBlog;
 import com.kibugs.blog.common.CommonResponse;
 
+import java.util.List;
+
 /**
  * @author : chenxingfei
  * @date: 2019-10-31  08:02
@@ -26,4 +28,11 @@ public interface KbBlogDubboService {
      * @return
      */
     CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page);
+
+    /**
+     * 获取首页推荐数据
+     * @return
+     */
+    CommonResponse<List<KbBlog>> indexRecommend();
+
 }

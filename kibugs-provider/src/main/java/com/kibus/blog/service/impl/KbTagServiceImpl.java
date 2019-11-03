@@ -6,6 +6,9 @@ import com.kibus.blog.service.IKbTagService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * <p>
  * 标签表 服务实现类
@@ -17,4 +20,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class KbTagServiceImpl extends ServiceImpl<KbTagMapper, KbTag> implements IKbTagService {
 
+    private final KbTagMapper tagMapper;
+
+    public KbTagServiceImpl(KbTagMapper tagMapper) {
+        this.tagMapper = tagMapper;
+    }
+
+
+    @Override
+    public List<Map<String, Integer>> getTagsForTop10() {
+        return tagMapper.getTagsForTop10();
+    }
 }

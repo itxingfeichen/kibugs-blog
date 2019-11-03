@@ -1,6 +1,7 @@
 package com.kibugs.blog.web.web;
 
 import com.kibugs.blog.web.service.KbCategoryService;
+import com.kibugs.blog.web.service.KbTagService;
 import com.kibugs.blog.web.service.KiBugsBlogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +20,12 @@ public class KiBlogIndexController {
 
     private final KbCategoryService categoryService;
 
-    public KiBlogIndexController(KiBugsBlogService kiBugsBlogService, KbCategoryService categoryService) {
+    private final KbTagService tagService;
+
+    public KiBlogIndexController(KiBugsBlogService kiBugsBlogService, KbCategoryService categoryService, KbTagService tagService) {
         this.kiBugsBlogService = kiBugsBlogService;
         this.categoryService = categoryService;
+        this.tagService = tagService;
     }
 
     /**
@@ -31,8 +35,7 @@ public class KiBlogIndexController {
     @RequestMapping("index")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/index");
-        modelAndView.addObject("page",kiBugsBlogService.indexPage(1, 20));
-        modelAndView.addObject("categoryTop5",categoryService.getCategoryTop5());
+        kiBugsBlogService.indexPage(modelAndView);
         return modelAndView;
     }
 

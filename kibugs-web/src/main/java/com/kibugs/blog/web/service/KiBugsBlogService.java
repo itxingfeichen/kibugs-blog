@@ -6,8 +6,14 @@ import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibug.blog.common.entity.KbBlog;
 import com.kibugs.blog.api.KbBlogDubboService;
 import com.kibugs.blog.common.CommonResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author：jannik
@@ -16,10 +22,20 @@ import org.springframework.stereotype.Service;
  * @description: 博客业务处理类
  **/
 @Service
+@Slf4j
 public class KiBugsBlogService {
 
     @Reference(version = "1.0.0")
     private KbBlogDubboService kbBlogDubboService;
+
+    private final KbCategoryService categoryService;
+
+    private final KbTagService tagService;
+
+    public KiBugsBlogService(KbCategoryService categoryService, KbTagService tagService) {
+        this.categoryService = categoryService;
+        this.tagService = tagService;
+    }
 
     public KbBlogDTO getBlogById(Long id) {
         CommonResponse<KbBlogDTO> one = kbBlogDubboService.getOne(id);
@@ -28,14 +44,42 @@ public class KiBugsBlogService {
 
     /**
      * 分页获取首页数据
-     * @param current
-     * @param size
+     *
+     * @param modelAndView
      * @return
      */
-    public IPage<KbBlog> indexPage(long current,long size){
-        IPage<KbBlog> page = new Page<>(current,size);
-        CommonResponse<IPage<KbBlog>> commonResponse = kbBlogDubboService.indexPage(page);
-        return commonResponse.getData();
+    public void indexPage(ModelAndView modelAndView) {
+        CompletableFuture<Void> blogAndCategoryTop5Future = CompletableFuture.runAsync(() -> {
+            IPage<KbBlog> page = new Page<>(1, 30);
+            CommonResponse<IPage<KbBlog>> commonResponse = kbBlogDubboService.indexPage(page);
+            IPage<KbBlog> data = commonResponse.getData();
+            modelAndView.addObject("page", data);
+        }).thenRunAsync(() -> modelAndView.addObject("categoryTop5", categoryService.getCategoryTop5())).whenComplete((r, e) -> {
+            if (e == null) {
+                log.info("首页加载完成");
+            } else {
+                log.info("首页加载异常", e);
+            }
+        });
+        CompletableFuture<Void> tagTop10AndRecommendFuture = CompletableFuture.runAsync(() -> modelAndView.addObject("tagTop10", tagService.getTagsForTop10())).thenRunAsync(() -> {
+            List<KbBlog> data = kbBlogDubboService.indexRecommend().getData();
+            modelAndView.addObject("recommends", data);
+        }).whenComplete((r, e) -> {
+            if (e == null) {
+                log.info("首页加载完成");
+            } else {
+                log.info("首页加载异常", e);
+            }
+        });
+        try {
+            CompletableFuture.allOf(blogAndCategoryTop5Future,tagTop10AndRecommendFuture).get();
+        } catch (InterruptedException e) {
+            log.info("首页加载InterruptedException异常",e);
+        } catch (ExecutionException e) {
+            log.info("首页加载ExecutionException异常",e);
+        }
+
     }
+
 
 }

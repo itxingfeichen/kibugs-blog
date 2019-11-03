@@ -80,6 +80,11 @@ public class KbBlog implements Serializable {
     private Integer views;
 
     /**
+     * 推荐（0：不推荐，1：推荐）
+     */
+    private Integer recommend;
+
+    /**
      * 发布时间
      */
     private Date publishTime;

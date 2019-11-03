@@ -94,7 +94,8 @@ body {
 }
 
 .ki-container {
-    max-width: 72em !important;
+    /*max-width: 100em !important;*/
+    max-width: 76em !important;
     margin: auto !important;
 }
 
@@ -113,9 +114,17 @@ body {
     display: none !important;
 }
 
+.ki-margin-tb-tiny{
+    margin-top: 1em !important;
+    margin-bottom: 0.3em !important;
+}
+
 .ki-margin-bottom-tiny {
     margin-bottom: 0.3em !important;
 
+}
+.ki-margin-top-large{
+    margin-top: 2em !important;
 }
 
 .ki-margin-bottom-small {
@@ -137,6 +146,9 @@ body {
     right: 0 !important;
 }
 
+.ki-text-black{
+    color: black !important;
+}
 
 @media screen and (max-width: 768px) {
     .ki-mobile-hide {

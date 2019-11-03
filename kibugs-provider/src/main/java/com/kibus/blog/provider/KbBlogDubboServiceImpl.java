@@ -2,6 +2,7 @@ package com.kibus.blog.provider;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibug.blog.common.entity.KbBlog;
 import com.kibug.blog.common.entity.KbCustomer;
@@ -50,7 +51,7 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
 
     @Override
     public CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page) {
-        IPage<KbBlog> iPage = blogService.page(page);
+        IPage<KbBlog> iPage = blogService.lambdaQuery().eq(KbBlog::getPublishStatus, 1).orderByDesc(KbBlog::getUpdateTime).page(page);
         List<KbBlog> records = iPage.getRecords();
         if (CollectionUtils.isEmpty(records)) {
             return CommonResponse.<IPage<KbBlog>>builder().build();
@@ -62,6 +63,19 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
             kbBlog.setCategory(iKbCategoryService.getById(kbBlog.getCategoryId()));
         });
         return CommonResponse.<IPage<KbBlog>>builder().data(iPage).build();
+    }
+
+    @Override
+    public CommonResponse<List<KbBlog>> indexRecommend() {
+        IPage<KbBlog> page = new Page<>(1, 10, false);
+        IPage<KbBlog> iPage = blogService.lambdaQuery().select(KbBlog::getId, KbBlog::getTitle,KbBlog::getCustomerId).eq(KbBlog::getPublishStatus, 1).eq(KbBlog::getRecommend, 1).orderByDesc(KbBlog::getUpdateTime).page(page);
+        List<KbBlog> records = iPage.getRecords();
+        // 封装用户信息
+        records.forEach(kbBlog -> {
+            KbCustomer customer = customerService.getOne(Wrappers.<KbCustomer>lambdaQuery().select(KbCustomer.class, info -> Objects.equals(info.getColumn(), "nickname") || Objects.equals(info.getColumn(), "avatar_url")).eq(KbCustomer::getId, kbBlog.getCustomerId()));
+            kbBlog.setCustomer(customer);
+        });
+        return CommonResponse.<List<KbBlog>>builder().data(records).build();
     }
 
 
