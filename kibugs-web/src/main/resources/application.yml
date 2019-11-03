@@ -7,6 +7,13 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  redis:
+#    password: 123456
+    url: redis://:123456@192.168.22.128:6379
+    timeout: 12000ms
+    lettuce:
+      shutdown-timeout: 500ms
+#    host: 192.168.22.128
 dubbo:
   application: ${spring.application.name}
   registry:
