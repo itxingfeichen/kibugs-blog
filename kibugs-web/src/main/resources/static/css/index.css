@@ -99,6 +99,11 @@ body {
     margin: auto !important;
 }
 
+.ki-container-login {
+    max-width: 38em !important;
+    margin-top: 25% !important;
+}
+
 .ki-container-small {
     max-width: 60em !important;
     margin: auto !important;
@@ -149,6 +154,12 @@ body {
 .ki-text-black{
     color: black !important;
 }
+.ki-margin-lr-btn-tiny{
+    margin-left: 5px !important;
+    margin-right: 2px;
+}
+
+
 
 @media screen and (max-width: 768px) {
     .ki-mobile-hide {
