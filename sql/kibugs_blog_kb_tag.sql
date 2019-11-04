@@ -1,0 +1,4 @@
+INSERT INTO `kibugs-blog`.kb_tag (id, name, remark, update_time, create_time) VALUES (1, 'java', 'java', '2019-11-03 10:52:53', '2019-11-03 10:53:41');
+INSERT INTO `kibugs-blog`.kb_tag (id, name, remark, update_time, create_time) VALUES (2, 'python', 'python', '2019-11-03 10:56:54', '2019-11-03 10:56:54');
+INSERT INTO `kibugs-blog`.kb_tag (id, name, remark, update_time, create_time) VALUES (3, 'JavaScript', '', '2019-11-03 11:10:03', '2019-11-03 10:57:35');
+INSERT INTO `kibugs-blog`.kb_tag (id, name, remark, update_time, create_time) VALUES (4, 'go', '', '2019-11-03 10:57:43', '2019-11-03 10:57:43');
