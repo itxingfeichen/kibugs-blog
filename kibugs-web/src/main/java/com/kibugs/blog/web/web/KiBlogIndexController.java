@@ -2,7 +2,7 @@ package com.kibugs.blog.web.web;
 
 import com.kibugs.blog.web.service.KbCategoryService;
 import com.kibugs.blog.web.service.KbTagService;
-import com.kibugs.blog.web.service.KiBugsBlogService;
+import com.kibugs.blog.web.service.KbBugsBlogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,13 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class KiBlogIndexController {
 
-    private final KiBugsBlogService kiBugsBlogService;
+    private final KbBugsBlogService kiBugsBlogService;
 
     private final KbCategoryService categoryService;
 
     private final KbTagService tagService;
 
-    public KiBlogIndexController(KiBugsBlogService kiBugsBlogService, KbCategoryService categoryService, KbTagService tagService) {
+    public KiBlogIndexController(KbBugsBlogService kiBugsBlogService, KbCategoryService categoryService, KbTagService tagService) {
         this.kiBugsBlogService = kiBugsBlogService;
         this.categoryService = categoryService;
         this.tagService = tagService;

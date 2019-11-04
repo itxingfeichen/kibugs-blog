@@ -1,6 +1,9 @@
 package com.kibugs.blog.web.web;
 
 
+import com.kibugs.blog.common.CommonResponse;
+import com.kibugs.blog.request.CustomerIntoDTO;
+import com.kibugs.blog.web.service.KbCustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,48 +25,76 @@ import java.util.Objects;
 @RequestMapping("/blog/customer")
 public class KbCustomerController extends BaseController {
 
+    private final KbCustomerService customerService;
+
+    public KbCustomerController(KbCustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     /**
      * 登录，注册页面跳转
+     *
      * @param type 操作类型（1：注册，其他：登录）
      * @return ModelAndView
      */
     @RequestMapping(value = {"/signUp/{type}", "/signIn/{type}"})
     public ModelAndView signUpOrSignIn(@PathVariable String type) {
-
+        ModelAndView modelAndView = new ModelAndView("/customer/register");
+        modelAndView.addObject("errMsg", "");
         if (Objects.equals(type, "1")) {
-            return new ModelAndView("/customer/register");
+            modelAndView.setViewName("/customer/register");
         } else {
-            return new ModelAndView("/customer/login");
+            modelAndView.setViewName("/customer/login");
         }
+        return modelAndView;
 
     }
 
     /**
      * 注册
+     *
      * @param password 密码
-     * @param email 邮箱
-     * @param phone 手机号
+     * @param email    邮箱
+     * @param phone    手机号
      * @return ModelAndView
      */
     @RequestMapping("signUp")
-    public ModelAndView signUp(String password,String email,String phone){
+    public ModelAndView signUp(String password, String email, String phone) {
 
-        log.info("{}{}{}",password,email,phone);
-        return null;
+        ModelAndView modelAndView = new ModelAndView();
+        log.info("{}{}{}", password, email, phone);
+        CustomerIntoDTO customerIntoDTO = CustomerIntoDTO.builder().email(email).password(password).phone(phone).build();
+        CommonResponse commonResponse = customerService.signUp(customerIntoDTO);
+        if (commonResponse.getSuccess()) {
+            modelAndView.setViewName("/index");
+        } else {
+            modelAndView.setViewName("/customer/register");
+            modelAndView.addObject("errMsg", commonResponse.getErrMsg());
+        }
+        return modelAndView;
     }
-
 
     /**
      * 登录
-     * @param email 邮箱
+     *
+     * @param email    邮箱
      * @param password 密码
      * @return ModelAndView
      */
     @RequestMapping("signIn")
-    public ModelAndView signIn(String email,String password){
-        log.info("{}{}",password,email);
-        return null;
+    public ModelAndView signIn(String email, String password) {
+        log.info("{}{}", password, email);
+
+        ModelAndView modelAndView = new ModelAndView();
+        CustomerIntoDTO customerIntoDTO = CustomerIntoDTO.builder().email(email).password(password).build();
+        CommonResponse commonResponse = customerService.signIn(customerIntoDTO);
+        if (commonResponse.getSuccess()) {
+            modelAndView.setViewName("/index");
+        } else {
+            modelAndView.setViewName("/customer/login");
+            modelAndView.addObject("errMsg", commonResponse.getErrMsg());
+        }
+        return modelAndView;
     }
 }
 

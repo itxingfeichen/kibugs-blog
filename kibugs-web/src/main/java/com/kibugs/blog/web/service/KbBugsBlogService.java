@@ -23,7 +23,7 @@ import java.util.concurrent.ExecutionException;
  **/
 @Service
 @Slf4j
-public class KiBugsBlogService {
+public class KbBugsBlogService {
 
     @Reference(version = "1.0.0")
     private KbBlogDubboService kbBlogDubboService;
@@ -32,7 +32,7 @@ public class KiBugsBlogService {
 
     private final KbTagService tagService;
 
-    public KiBugsBlogService(KbCategoryService categoryService, KbTagService tagService) {
+    public KbBugsBlogService(KbCategoryService categoryService, KbTagService tagService) {
         this.categoryService = categoryService;
         this.tagService = tagService;
     }

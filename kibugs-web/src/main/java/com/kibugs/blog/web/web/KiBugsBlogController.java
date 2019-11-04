@@ -1,7 +1,7 @@
 package com.kibugs.blog.web.web;
 
 import com.kibug.blog.common.dto.KbBlogDTO;
-import com.kibugs.blog.web.service.KiBugsBlogService;
+import com.kibugs.blog.web.service.KbBugsBlogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,9 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class KiBugsBlogController {
 
 
-    private final KiBugsBlogService kiBugsBlogService;
+    private final KbBugsBlogService kiBugsBlogService;
 
-    public KiBugsBlogController(KiBugsBlogService kiBugsBlogService) {
+    public KiBugsBlogController(KbBugsBlogService kiBugsBlogService) {
         this.kiBugsBlogService = kiBugsBlogService;
     }
 

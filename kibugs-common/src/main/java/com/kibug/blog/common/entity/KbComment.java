@@ -1,6 +1,7 @@
 package com.kibug.blog.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -18,7 +19,7 @@ import java.util.Date;
 @Data
 
 @Accessors(chain = true)
-public class KbComment implements Serializable {
+public class KbComment extends Model<KbComment> implements Serializable {
 
     private static final long serialVersionUID=1L;
 
