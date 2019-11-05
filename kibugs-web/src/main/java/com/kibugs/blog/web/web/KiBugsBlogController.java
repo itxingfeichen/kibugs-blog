@@ -5,6 +5,7 @@ import com.kibug.blog.common.entity.KbBlog;
 import com.kibug.blog.common.entity.KbCustomer;
 import com.kibugs.blog.web.service.KbBugsBlogService;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -50,12 +51,12 @@ public class KiBugsBlogController extends BaseController {
 
     /**
      * 发布
-     *
+     * todo 构建form对象封装参数
      * @param kbBlog
      * @return
      */
+    @PostMapping("gotoPublish")
     public ModelAndView publishBlog(HttpServletRequest request, KbBlog kbBlog) {
-
         ModelAndView modelAndView = new ModelAndView("/index");
         kiBugsBlogService.publishBlog(kbBlog);
         return modelAndView;

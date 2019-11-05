@@ -112,4 +112,14 @@ public class KbBlog extends Model<KbBlog> implements Serializable {
     @TableField(exist = false)
     private KbCategory category;
 
+    /**
+     * 评论开关（0：关闭，1：开启）
+     */
+    private Integer commentStatus;
+
+    /**
+     * 转载声明（0：不需要，1：需要）
+     */
+    private Integer reprintStatus;
+
 }

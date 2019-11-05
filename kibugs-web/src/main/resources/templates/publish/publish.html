@@ -1,42 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>index</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/common/script :: common_header(~{::title},~{::link})">
+    <title>发布</title>
+    <link rel="stylesheet" th:href="@{/lib/editormd/css/editormd.min.css}">
 </head>
-<link href="../static/css/index.css" rel="stylesheet">
-<link href="../static/lib/editormd/css/editormd.min.css" rel="stylesheet">
 
 </head>
 <body>
 <!--导航-->
-<nav class="ui inverted attached segment ki-padded-tb-mini">
-    <div class="ui container">
-        <div class="ui inverted secondary stackable menu">
-            <h2 class="ui teal header item">博客后台 </h2>
-            <a href="index.html" class="item ki-mobile-hide"><i class="home mini icon"></i>博客管理</a>
-            <a href="category.html" class="item ki-mobile-hide"><i class="idea mini icon"></i>分类管理</a>
-            <a href="tags.html" class="item ki-mobile-hide"><i class="tags mini icon"></i>标签管理</a>
-            <div class="right menu">
-                <div class="ui dropdown item">
-                    <div class="text">
-                        <img src="../static/images/WechatIMG.jpeg" alt="" class="ui avatar image">
-                        管理员
-                    </div>
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <a href="#" class="item">注销</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <a href="" class="ui black icon button ki-sidebar-position ki-mobile-show">
-        <i class="icon sidebar"></i>
-    </a>
-</nav>
+<div th:replace="/common/script :: nav('1')"></div>
+
 <div class="ui attached pointing menu">
     <div class="ui container">
         <div class="right teal menu">
@@ -50,7 +23,7 @@
 <!--内容部分呢-->
 <div class="ki-padded-tb-large ki-container">
     <div class="ui container">
-        <form action="#" class="ui form" method="post">
+        <form th:action="@{/blog/publishBlog}" class="ui form" method="post">
             <div class="required field">
                 <div class="ui left labeled input">
                     <div class="ui selection compact teal basic dropdown label">
@@ -58,20 +31,21 @@
                         <i class="dropdown icon"></i>
                         <div class="default text">原创</div>
                         <div class="menu">
-                            <div class="item" data-value="原创">原创</div>
-                            <div class="item" data-value="转载">转载</div>
-                            <div class="item" data-value="翻译">翻译</div>
+                            <div class="item" data-value="0">原创</div>
+                            <div class="item" data-value="1">转载</div>
+                            <div class="item" data-value="2">翻译</div>
+                            <div class="item" data-value="3">其他</div>
                         </div>
                     </div>
                     <input type="text" name="title" placeholder="请输入标题">
                 </div>
             </div>
-            <div class="field">
+            <div class="required field">
                 <div id="md-content" style="z-index: 1 !important;">
                     <textarea name="content" id="content" placeholder="请输入内容" style="display: none"></textarea>
                 </div>
             </div>
-            <div class="tow fields">
+            <div class="required tow fields">
                 <div class="field">
                     <div class="ui left labeled action input">
                         <label class="ui compact teal basic label">分类</label>
@@ -86,7 +60,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="field">
+                <div class="required field">
                     <div class="ui left labeled action input">
                         <label class="ui compact teal basic label">标签</label>
                         <div class="ui multiple search selection dropdown">
@@ -101,28 +75,31 @@
                     </div>
                 </div>
             </div>
-            <div class="field">
+            <div class="required field">
                 <div class="ui left labeled input">
                     <label class="ui teal basic label">首图</label>
-                    <input type="text" name="indexPicture" placeholder="首图引用地址">
+                    <input type="text" name="firstImageUrl" placeholder="首图引用地址">
                 </div>
+            </div>
+            <div class="required field">
+                <textarea name="description" placeholder="博客描述..." maxlength="200"></textarea>
             </div>
             <div class="inline fields">
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="shareInfo" name="shareInfo" class="hidden">
+                        <input type="checkbox" id="shareInfo" name="reprintStatus" class="hidden">
                         <label for="shareInfo">转载声明</label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="appreciation" name="appreciation" class="hidden">
+                        <input type="checkbox" id="appreciation" name="appreciateStatus" class="hidden">
                         <label for="appreciation">赞赏</label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="comment" name="comment" class="hidden">
+                        <input type="checkbox" id="comment" name="commentStatus" class="hidden">
                         <label for="comment">评论</label>
                     </div>
                 </div>
@@ -130,8 +107,8 @@
             <div class="ui error message"></div>
             <div class="ui right aligned container">
                 <button class="ui button" onclick="window.history.go(-1)">返回</button>
-                <button class="ui secondary button">保存</button>
-                <button class="ui teal button">发布</button>
+                <button class="ui secondary button" id="save-btn">保存</button>
+                <button class="ui teal button" id="publish-btn">发布</button>
             </div>
         </form>
     </div>
@@ -141,7 +118,7 @@
     <div class="ui center aligned container">
         <div class="ui inverted divided stackable grid">
             <div class="three wide column">
-                <img src="../static/images/WechatIMG.jpeg" class="ui rounded image" style="width: 110px;height: 110px">
+                <img src="/images/WechatIMG.jpeg" class="ui rounded image" style="width: 110px;height: 110px">
             </div>
             <div class="three wide column">
                 <h4 class="ui inverted header">博客介绍</h4>
@@ -169,14 +146,24 @@
         <p class="ki-text-thin ki-text-spaced ki-opacity-tiny">© 2019 kibugs.com 版权所有 ICP证：浙B2-20191021</p>
     </div>
 </footer>
-
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.min.js"></script>
-<script src="../static/lib/editormd/js/editormd.amd.min.js"></script>
+<!--js导入-->
+<script th:replace="/common/script :: common_script"></script>
+<script th:src="@{/lib/editormd/js/editormd.amd.min.js}"></script>
 <script>
     $(".ui.dropdown").dropdown({
         on: 'hover'
-    })
+    });
+
+    $('#save-btn').click(function () {
+        $('[name="published"]').val(false);
+        $('#blog-form').submit();
+    });
+
+
+    $('#publish-btn').click(function () {
+        $('[name="published"]').val(true);
+        $('#blog-form').submit();
+    });
     $(".ui.form").form({
         fields: {
             title: {
@@ -185,6 +172,34 @@
                     type: 'empty',
                     prompt: '请输入博客标题!'
                 }],
+            },
+            description: {
+                identifier: 'description',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入博客内容!'
+                }],
+            },
+            categoryId: {
+                identifier: 'category',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请选择分类!'
+                }],
+            },
+            title: {
+                identifier: 'tags',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请选择标签!'
+                }],
+            },
+            title: {
+                identifier: 'firstImageUrl',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入首图地址!'
+                }]
             }
         }
     });
@@ -193,7 +208,7 @@
             width: "100%",
             height: "1000",
             syncScrolling: "single",
-            path: "../static/lib/editormd/"
+            path: "/lib/editormd/"
         });
     });
 </script>

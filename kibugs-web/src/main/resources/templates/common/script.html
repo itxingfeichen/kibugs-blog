@@ -20,7 +20,7 @@
 </th:block>
 
 <!--导航部分-->
-<div th:fragment="nav">
+<div th:fragment="nav(publish)">
     <nav class="ui inverted attached segment ki-padded-tb-mini">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
@@ -28,7 +28,7 @@
                 <a th:href="@{/index}" class="item ki-mobile-hide"><i class="home mini icon"></i>首页</a>
                 <a href="aboutme.html" class="item ki-mobile-hide"><i class="info mini icon"></i>关于我</a>
                 <div class="right menu">
-                    <div class="item ki-mobile-hide">
+                    <div class="item ki-mobile-hide" th:if="${publish != '1'}">
                         <div class="ui transparent inverted icon input">
                             <i class="search link icon"></i>
                             <input type="text" placeholder="Search">
@@ -41,7 +41,7 @@
                     <div class="item ki-mobile-hide">
 
 
-                        <a class="ui button circular orange" th:if="${customer != null}" th:href="@{/blog/gotoPublish}"><i class="pushed medium icon"></i> 去发布</a>
+                        <a class="ui button circular orange" th:if="${customer != null && publish != '1'}" th:href="@{/blog/gotoPublish}"><i class="pushed medium icon"></i> 去写BUG</a>
                     </div>
                     <div class="ui dropdown item" th:if="${customer != null}">
                         <img  th:src="@{${customer.avatarUrl}}" alt="" class="ui avatar circular image">

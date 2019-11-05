@@ -189,3 +189,12 @@ INSERT INTO `kb_tag` VALUES ('1', 'java', 'java', '2019-11-03 10:52:53', '2019-1
 INSERT INTO `kb_tag` VALUES ('2', 'python', 'python', '2019-11-03 10:56:54', '2019-11-03 10:56:54');
 INSERT INTO `kb_tag` VALUES ('3', 'JavaScript', '', '2019-11-03 11:10:03', '2019-11-03 10:57:35');
 INSERT INTO `kb_tag` VALUES ('4', 'go', '', '2019-11-03 10:57:43', '2019-11-03 10:57:43');
+
+-- ----------------------------
+-- 2019-11-04
+-- ----------------------------
+alter table kb_blog add commentStatus tinyint default 0 null comment '评论开关（0：关闭，1：开启）';
+
+alter table kb_blog add reprintStatus tinyint default 0 null comment '转载声明（0：不需要，1：需要）';
+
+
