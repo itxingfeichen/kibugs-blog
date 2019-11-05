@@ -7,6 +7,7 @@ import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibug.blog.common.entity.KbBlog;
 import com.kibug.blog.common.entity.KbCustomer;
 import com.kibugs.blog.api.KbBlogDubboService;
+import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
 import com.kibus.blog.service.IKbBlogService;
 import com.kibus.blog.service.IKbCategoryService;
@@ -76,6 +77,15 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
             kbBlog.setCustomer(customer);
         });
         return CommonResponse.<List<KbBlog>>builder().data(records).build();
+    }
+
+    @Override
+    public CommonResponse publishBlog(CommonRequest<KbBlog> commonRequest) {
+        final KbBlog kbBlog = commonRequest.getData();
+        if (kbBlog != null) {
+            kbBlog.insert();
+        }
+        return CommonResponse.<List<KbBlog>>builder().success(true).build();
     }
 
 

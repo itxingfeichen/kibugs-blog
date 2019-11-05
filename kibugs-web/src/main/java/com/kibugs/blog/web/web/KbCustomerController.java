@@ -1,6 +1,7 @@
 package com.kibugs.blog.web.web;
 
 
+import com.kibug.blog.common.entity.KbCustomer;
 import com.kibugs.blog.common.CommonResponse;
 import com.kibugs.blog.request.CustomerIntoDTO;
 import com.kibugs.blog.web.service.KbCustomerService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 /**
@@ -39,7 +41,7 @@ public class KbCustomerController extends BaseController {
      */
     @RequestMapping(value = {"/signUp/{type}", "/signIn/{type}"})
     public ModelAndView signUpOrSignIn(@PathVariable String type) {
-        ModelAndView modelAndView = new ModelAndView("/customer/register");
+        ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("errMsg", "");
         if (Objects.equals(type, "1")) {
             modelAndView.setViewName("/customer/register");
@@ -66,7 +68,7 @@ public class KbCustomerController extends BaseController {
         CustomerIntoDTO customerIntoDTO = CustomerIntoDTO.builder().email(email).password(password).phone(phone).build();
         CommonResponse commonResponse = customerService.signUp(customerIntoDTO);
         if (commonResponse.getSuccess()) {
-            modelAndView.setViewName("/index");
+            modelAndView.setViewName("/login");
         } else {
             modelAndView.setViewName("/customer/register");
             modelAndView.addObject("errMsg", commonResponse.getErrMsg());
@@ -82,13 +84,13 @@ public class KbCustomerController extends BaseController {
      * @return ModelAndView
      */
     @RequestMapping("signIn")
-    public ModelAndView signIn(String email, String password) {
+    public ModelAndView signIn(HttpServletRequest request, String email, String password) {
         log.info("{}{}", password, email);
-
         ModelAndView modelAndView = new ModelAndView();
         CustomerIntoDTO customerIntoDTO = CustomerIntoDTO.builder().email(email).password(password).build();
-        CommonResponse commonResponse = customerService.signIn(customerIntoDTO);
+        CommonResponse<KbCustomer> commonResponse = customerService.signIn(customerIntoDTO);
         if (commonResponse.getSuccess()) {
+            request.getSession().setAttribute("kibugs:customer",commonResponse.getData());
             modelAndView.setViewName("/index");
         } else {
             modelAndView.setViewName("/customer/login");

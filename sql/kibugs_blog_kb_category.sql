@@ -1,2 +1,0 @@
-INSERT INTO `kibugs-blog`.kb_category (id, name, remark, update_time, create_time) VALUES (1, '核心技术', '核心技术', '2019-11-02 21:20:10', '2019-11-02 21:20:10');
-INSERT INTO `kibugs-blog`.kb_category (id, name, remark, update_time, create_time) VALUES (2, '执行合一', '核心技术', '2019-11-02 22:44:31', '2019-11-02 22:44:31');

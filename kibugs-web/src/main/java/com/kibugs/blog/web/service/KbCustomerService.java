@@ -1,5 +1,6 @@
 package com.kibugs.blog.web.service;
 
+import com.kibug.blog.common.entity.KbCustomer;
 import com.kibugs.blog.api.KbBlogCustomerDubboService;
 import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
@@ -38,7 +39,7 @@ public class KbCustomerService {
      * @param customerIntoDTO
      * @return
      */
-    public CommonResponse signIn(CustomerIntoDTO customerIntoDTO){
+    public CommonResponse<KbCustomer> signIn(CustomerIntoDTO customerIntoDTO){
         return kbBlogDubboService.signIn(CommonRequest.<CustomerIntoDTO>builder().data(customerIntoDTO).build());
 
     }

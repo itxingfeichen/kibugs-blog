@@ -1,1 +1,0 @@
-INSERT INTO `kibugs-blog`.kb_customer (id, cell_phone, username, nickname, email, password, user_status, avatar_url, update_time, create_time) VALUES (1, '18613892254', 'jannik', '爱折腾', '', '123', 0, 'https://picsum.photos/id/1011/367/267', '2019-11-02 21:35:26', '2019-11-02 20:20:07');

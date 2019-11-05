@@ -82,4 +82,15 @@ public class KbBugsBlogService {
     }
 
 
+    /**
+     * 发布
+     * @param blog
+     * @return
+     */
+    public CommonResponse publishBlog(KbBlog blog){
+
+        return null;
+    }
+
+
 }

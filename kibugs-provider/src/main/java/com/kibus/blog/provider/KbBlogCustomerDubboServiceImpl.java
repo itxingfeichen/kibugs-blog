@@ -39,15 +39,15 @@ public class KbBlogCustomerDubboServiceImpl implements KbBlogCustomerDubboServic
     }
 
     @Override
-    public CommonResponse signIn(CommonRequest<CustomerIntoDTO> commonRequest) {
+    public CommonResponse<KbCustomer> signIn(CommonRequest<CustomerIntoDTO> commonRequest) {
         KbCustomer kbCustomer = new KbCustomer();
         CustomerIntoDTO customerIntoDTO = commonRequest.getData();
         LambdaQueryWrapper<KbCustomer> wrapper = Wrappers.<KbCustomer>lambdaQuery().and(lambdaQueryWrapper -> Wrappers.<KbCustomer>lambdaQuery().eq(KbCustomer::getEmail, customerIntoDTO.getEmail()).eq(KbCustomer::getPassword, customerIntoDTO.getPassword())).
                 or(lambdaQueryWrapper -> Wrappers.<KbCustomer>lambdaQuery().eq(KbCustomer::getUsername, customerIntoDTO.getUsername()).eq(KbCustomer::getPassword, customerIntoDTO.getPassword()));
         KbCustomer customer = kbCustomer.selectOne(wrapper);
         if (customer == null) {
-            return CommonResponse.builder().success(false).errMsg("登录账号或密码错误").build();
+            return CommonResponse.<KbCustomer>builder().success(false).errMsg("登录账号或密码错误").build();
         }
-        return CommonResponse.builder().success(true).build();
+        return CommonResponse.<KbCustomer>builder().data(customer).success(true).build();
     }
 }
