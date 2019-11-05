@@ -1,6 +1,7 @@
 package com.kibugs.blog.web.web;
 
 
+import com.kibug.blog.common.constant.BaseConstants;
 import com.kibug.blog.common.entity.KbCustomer;
 import com.kibugs.blog.common.CommonResponse;
 import com.kibugs.blog.request.CustomerIntoDTO;
@@ -90,13 +91,30 @@ public class KbCustomerController extends BaseController {
         CustomerIntoDTO customerIntoDTO = CustomerIntoDTO.builder().email(email).password(password).build();
         CommonResponse<KbCustomer> commonResponse = customerService.signIn(customerIntoDTO);
         if (commonResponse.getSuccess()) {
-            request.getSession().setAttribute("kibugs:customer",commonResponse.getData());
-            modelAndView.setViewName("/index");
+            KbCustomer kbCustomer = commonResponse.getData();
+            request.getSession().setAttribute("kibugs:customer", kbCustomer);
+            modelAndView.addObject("customer",kbCustomer);
+            modelAndView.setViewName("redirect:/index");
         } else {
             modelAndView.setViewName("/customer/login");
             modelAndView.addObject("errMsg", commonResponse.getErrMsg());
         }
         return modelAndView;
+    }
+
+
+    /**
+     * 退出登录
+     * @param request
+     * @return
+     */
+    @RequestMapping("logout")
+    public ModelAndView logout(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView();
+        request.getSession().removeAttribute(BaseConstants.CUSTOMER_SESSION);
+        modelAndView.setViewName("redirect:/index");
+        return modelAndView;
+
     }
 }
 

@@ -1,6 +1,5 @@
 package com.kibus.blog.provider;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.kibug.blog.common.entity.KbCustomer;
 import com.kibugs.blog.api.KbBlogCustomerDubboService;
@@ -8,6 +7,7 @@ import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
 import com.kibugs.blog.request.CustomerIntoDTO;
 import com.kibus.blog.service.IKbCustomerService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Service;
 
 /**
@@ -34,17 +34,29 @@ public class KbBlogCustomerDubboServiceImpl implements KbBlogCustomerDubboServic
         kbCustomer.setNickname(customerIntoDTO.getPhone());
         kbCustomer.setPassword(customerIntoDTO.getPassword());
         kbCustomer.setUserStatus(true);
-        kbCustomer.insert();
-        return CommonResponse.builder().success(true).build();
+        return CommonResponse.builder().success(kbCustomer.insert()).build();
     }
 
     @Override
     public CommonResponse<KbCustomer> signIn(CommonRequest<CustomerIntoDTO> commonRequest) {
-        KbCustomer kbCustomer = new KbCustomer();
         CustomerIntoDTO customerIntoDTO = commonRequest.getData();
-        LambdaQueryWrapper<KbCustomer> wrapper = Wrappers.<KbCustomer>lambdaQuery().and(lambdaQueryWrapper -> Wrappers.<KbCustomer>lambdaQuery().eq(KbCustomer::getEmail, customerIntoDTO.getEmail()).eq(KbCustomer::getPassword, customerIntoDTO.getPassword())).
-                or(lambdaQueryWrapper -> Wrappers.<KbCustomer>lambdaQuery().eq(KbCustomer::getUsername, customerIntoDTO.getUsername()).eq(KbCustomer::getPassword, customerIntoDTO.getPassword()));
-        KbCustomer customer = kbCustomer.selectOne(wrapper);
+        String email = customerIntoDTO.getEmail();
+        String username = customerIntoDTO.getUsername();
+        String password = customerIntoDTO.getPassword();
+        if (StringUtils.isBlank(password)) {
+            return CommonResponse.<KbCustomer>builder().success(false).errMsg("登录密码错误").build();
+        }
+        if (StringUtils.isBlank(email) && StringUtils.isBlank(username)) {
+            return CommonResponse.<KbCustomer>builder().success(false).errMsg("登录账户错误").build();
+        }
+        KbCustomer customer = null;
+
+        // 优先邮箱登录
+        if (StringUtils.isNotBlank(email)) {
+            customer = customerService.getOne(Wrappers.<KbCustomer>lambdaQuery().eq(KbCustomer::getEmail, email).eq(KbCustomer::getPassword, password));
+        } else if (StringUtils.isNotBlank(username)) {
+            customer = customerService.getOne(Wrappers.<KbCustomer>lambdaQuery().eq(KbCustomer::getUsername, username).eq(KbCustomer::getPassword, password));
+        }
         if (customer == null) {
             return CommonResponse.<KbCustomer>builder().success(false).errMsg("登录账号或密码错误").build();
         }

@@ -24,8 +24,8 @@
     <nav class="ui inverted attached segment ki-padded-tb-mini">
         <div class="ui container">
             <div class="ui inverted secondary stackable menu">
-                <a href="#" class="item ki-mobile-hide"><i class="icon bug big"></i></a>
-                <a href="index.html" class="item ki-mobile-hide"><i class="home mini icon"></i>首页</a>
+                <a th:href="@{/index}" class="item ki-mobile-hide"> <i class="icon clockwise rotated circular teal bug link big"></i></a>
+                <a th:href="@{/index}" class="item ki-mobile-hide"><i class="home mini icon"></i>首页</a>
                 <a href="aboutme.html" class="item ki-mobile-hide"><i class="info mini icon"></i>关于我</a>
                 <div class="right menu">
                     <div class="item ki-mobile-hide">
@@ -34,20 +34,23 @@
                             <input type="text" placeholder="Search">
                         </div>
                     </div>
-                    <div class="item">
+                    <div class="item" th:if="${customer == null}">
                         <a th:href="@{/blog/customer/signUp/1}" class="ui circular basic orange button">注册</a>
-                        <a th:href="@{/blog/customer/signIn/2}" class="ui inverted primary ki-padded-lr-response ki-margin-lr-btn-tiny basic circular button ki-text-thin">登录</a>
+                        <a th:href="@{/blog/customer/signIn/2}"  class="ui inverted primary ki-padded-lr-response ki-margin-lr-btn-tiny basic circular button ki-text-thin">登录</a>
                     </div>
                     <div class="item ki-mobile-hide">
 
 
-                        <a class="ui button disabled circular orange" th:href="@{/blog/gotoPublish}"><i class="pushed medium icon"></i> 去发布</a>
+                        <a class="ui button circular orange" th:if="${customer != null}" th:href="@{/blog/gotoPublish}"><i class="pushed medium icon"></i> 去发布</a>
                     </div>
-                    <div class="ui dropdown item">
-                        <img src="/images/WechatIMG.jpeg" alt="" class="ui avatar circular image">
+                    <div class="ui dropdown item" th:if="${customer != null}">
+                        <img  th:src="@{${customer.avatarUrl}}" alt="" class="ui avatar circular image">
                         <i class="dropdown icon" style="margin-left:0px"></i>
                         <div class="menu">
-                            <a href="#" class="item">退出</a>
+                            <a th:href="@{/blog/customer/logout}" class="item">个人信息</a>
+                            <a th:href="@{/blog/customer/logout}" class="item">我的收藏</a>
+                            <a th:href="@{/blog/customer/logout}" class="item">我的关注</a>
+                            <a th:href="@{/blog/customer/logout}" class="item">退出</a>
                         </div>
                     </div>
                 </div>

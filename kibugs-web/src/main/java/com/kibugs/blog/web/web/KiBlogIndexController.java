@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author : chenxingfei
  * @date: 2019-11-01  07:04
@@ -14,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @RequestMapping
 @Controller
-public class KiBlogIndexController {
+public class KiBlogIndexController extends BaseController {
 
     private final KbBugsBlogService kiBugsBlogService;
 
@@ -33,8 +35,9 @@ public class KiBlogIndexController {
      * @return
      */
     @RequestMapping("index")
-    public ModelAndView index() {
+    public ModelAndView index(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/index");
+        modelAndView.addObject("customer",getCurrentCustomer(request));
         kiBugsBlogService.indexPage(modelAndView);
         return modelAndView;
     }

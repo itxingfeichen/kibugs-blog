@@ -20,12 +20,7 @@ public abstract class BaseController {
      * @return
      */
     protected KbCustomer getCurrentCustomer(HttpServletRequest request) {
-        final KbCustomer customer = (KbCustomer) request.getSession().getAttribute("kibugs:customer");
-
-        if (customer == null) {
-            throw new KiBugsLoginException("用户不存在，请重新登录");
-        }
-        return customer;
+        return (KbCustomer) request.getSession().getAttribute("kibugs:customer");
     }
 
 }
