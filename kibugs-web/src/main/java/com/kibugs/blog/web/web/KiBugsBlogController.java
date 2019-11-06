@@ -1,8 +1,9 @@
 package com.kibugs.blog.web.web;
 
 import com.kibug.blog.common.dto.KbBlogDTO;
-import com.kibug.blog.common.entity.KbBlog;
 import com.kibug.blog.common.entity.KbCustomer;
+import com.kibug.blog.common.form.KbBlogPublishForm;
+import com.kibugs.blog.common.CommonResponse;
 import com.kibugs.blog.web.service.KbBugsBlogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,16 +50,20 @@ public class KiBugsBlogController extends BaseController {
         return modelAndView;
     }
 
+
     /**
      * 发布
-     * todo 构建form对象封装参数
-     * @param kbBlog
+     * @param request
+     * @param blogPublishForm 表单数据封装对象 {@link KbBlogPublishForm}
      * @return
      */
-    @PostMapping("gotoPublish")
-    public ModelAndView publishBlog(HttpServletRequest request, KbBlog kbBlog) {
-        ModelAndView modelAndView = new ModelAndView("/index");
-        kiBugsBlogService.publishBlog(kbBlog);
+    @PostMapping("publishBlog")
+    public ModelAndView publishBlog(HttpServletRequest request, KbBlogPublishForm blogPublishForm) {
+        ModelAndView modelAndView = new ModelAndView();
+        CommonResponse commonResponse = kiBugsBlogService.publishBlog(blogPublishForm,getCurrentCustomer(request));
+        if (commonResponse.getSuccess()) {
+            modelAndView.setViewName("redirect:/index");
+        }
         return modelAndView;
     }
 

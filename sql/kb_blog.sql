@@ -197,4 +197,11 @@ alter table kb_blog add commentStatus tinyint default 0 null comment '评论开�
 
 alter table kb_blog add reprintStatus tinyint default 0 null comment '转载声明（0：不需要，1：需要）';
 
+create table `kibugs-blog`.kb_blog_detail
+(
+  id      bigint auto_increment comment '主键'
+    primary key,
+  blog_id tinyint  not null comment '博客ID',
+  content longtext not null comment '博客内容'
+);
 

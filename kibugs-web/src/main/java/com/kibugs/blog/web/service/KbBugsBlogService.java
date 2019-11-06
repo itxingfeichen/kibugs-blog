@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibug.blog.common.entity.KbBlog;
+import com.kibug.blog.common.entity.KbCustomer;
+import com.kibug.blog.common.form.KbBlogPublishForm;
 import com.kibugs.blog.api.KbBlogDubboService;
 import com.kibugs.blog.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -85,9 +87,13 @@ public class KbBugsBlogService {
     /**
      * 发布
      * @param blog
+     * @param currentCustomer
      * @return
      */
-    public CommonResponse publishBlog(KbBlog blog){
+    public CommonResponse publishBlog(KbBlogPublishForm blog, KbCustomer currentCustomer){
+
+
+
 
         return null;
     }

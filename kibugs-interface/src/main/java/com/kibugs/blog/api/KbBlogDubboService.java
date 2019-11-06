@@ -2,6 +2,7 @@ package com.kibugs.blog.api;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.kibug.blog.common.dto.KbBlogDTO;
+import com.kibug.blog.common.dto.KbBlogPublishDTO;
 import com.kibug.blog.common.entity.KbBlog;
 import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
@@ -42,6 +43,6 @@ public interface KbBlogDubboService {
      * @param commonRequest
      * @return
      */
-    CommonResponse publishBlog(CommonRequest<KbBlog> commonRequest);
+    CommonResponse publishBlog(CommonRequest<KbBlogPublishDTO> commonRequest);
 
 }

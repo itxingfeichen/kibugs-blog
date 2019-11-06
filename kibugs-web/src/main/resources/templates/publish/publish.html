@@ -24,10 +24,12 @@
 <div class="ki-padded-tb-large ki-container">
     <div class="ui container">
         <form th:action="@{/blog/publishBlog}" class="ui form" method="post">
+            <input type="hidden" name="publishStatus">
+            <input type="hidden" name="id">
             <div class="required field">
                 <div class="ui left labeled input">
                     <div class="ui selection compact teal basic dropdown label">
-                        <input type="hidden" value="原创">
+                        <input type="hidden" name="blogType" value="0">
                         <i class="dropdown icon"></i>
                         <div class="default text">原创</div>
                         <div class="menu">
@@ -114,38 +116,8 @@
     </div>
 </div>
 
-<footer class="ui inverted segment vertical ki-padded-tb-massive">
-    <div class="ui center aligned container">
-        <div class="ui inverted divided stackable grid">
-            <div class="three wide column">
-                <img src="/images/WechatIMG.jpeg" class="ui rounded image" style="width: 110px;height: 110px">
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">博客介绍</h4>
-                <div class="ui inverted link list">
-                    <a href="" class="item ki-text-thin ki-text-spaced ki-opacity-mini">用户故事</a>
-                    <a href="" class="item ki-text-thin ki-text-spaced ki-opacity-mini">用户故事</a>
-                    <a href="" class="item ki-text-thin ki-text-spaced ki-opacity-mini">用户故事</a>
-                </div>
-            </div>
-            <div class="three wide column">
-                <h4 class="ui inverted header">联系我</h4>
-                <div class="ui inverted link list">
-                    <a href="" class="item item ki-text-thin ki-text-spaced ki-opacity-mini">xingfeichen@163.com</a>
-                    <a href="" class="item item ki-text-thin ki-text-spaced ki-opacity-mini">qq:1151590116</a>
-                </div>
-            </div>
-            <div class="seven wide column">
-                <h4 class="ui inverted header">介绍</h4>
-                <p class="ki-text-thin ki-text-spaced ki-opacity-mini">
-                    对方很快就啊还记得反馈黑无法能看见部对方很快就啊对方很快就啊还记得反馈黑无法能看见部分进口好看的少女风快还记得反馈黑无法能看见部分进口好看的少女风快分进口好看的少女风快</p>
-
-            </div>
-        </div>
-        <div class="ui inverted section divider"></div>
-        <p class="ki-text-thin ki-text-spaced ki-opacity-tiny">© 2019 kibugs.com 版权所有 ICP证：浙B2-20191021</p>
-    </div>
-</footer>
+<!--低部内容-->
+<footer th:replace="/common/script :: footer"></footer>
 <!--js导入-->
 <script th:replace="/common/script :: common_script"></script>
 <script th:src="@{/lib/editormd/js/editormd.amd.min.js}"></script>
@@ -155,13 +127,12 @@
     });
 
     $('#save-btn').click(function () {
-        $('[name="published"]').val(false);
+        $('[name="publishStatus"]').val(0);
         $('#blog-form').submit();
     });
 
-
     $('#publish-btn').click(function () {
-        $('[name="published"]').val(true);
+        $('[name="publishStatus"]').val(1);
         $('#blog-form').submit();
     });
     $(".ui.form").form({

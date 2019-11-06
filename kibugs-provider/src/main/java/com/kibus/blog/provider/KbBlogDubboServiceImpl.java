@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kibug.blog.common.dto.KbBlogDTO;
+import com.kibug.blog.common.dto.KbBlogPublishDTO;
 import com.kibug.blog.common.entity.KbBlog;
+import com.kibug.blog.common.entity.KbBlogDetail;
 import com.kibug.blog.common.entity.KbCustomer;
 import com.kibugs.blog.api.KbBlogDubboService;
 import com.kibugs.blog.common.CommonRequest;
@@ -14,6 +16,7 @@ import com.kibus.blog.service.IKbCategoryService;
 import com.kibus.blog.service.IKbCustomerService;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -69,7 +72,7 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
     @Override
     public CommonResponse<List<KbBlog>> indexRecommend() {
         IPage<KbBlog> page = new Page<>(1, 10, false);
-        IPage<KbBlog> iPage = blogService.lambdaQuery().select(KbBlog::getId, KbBlog::getTitle,KbBlog::getCustomerId).eq(KbBlog::getPublishStatus, 1).eq(KbBlog::getRecommend, 1).orderByDesc(KbBlog::getUpdateTime).page(page);
+        IPage<KbBlog> iPage = blogService.lambdaQuery().select(KbBlog::getId, KbBlog::getTitle, KbBlog::getCustomerId).eq(KbBlog::getPublishStatus, 1).eq(KbBlog::getRecommend, 1).orderByDesc(KbBlog::getUpdateTime).page(page);
         List<KbBlog> records = iPage.getRecords();
         // 封装用户信息
         records.forEach(kbBlog -> {
@@ -80,10 +83,24 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
     }
 
     @Override
-    public CommonResponse publishBlog(CommonRequest<KbBlog> commonRequest) {
-        final KbBlog kbBlog = commonRequest.getData();
-        if (kbBlog != null) {
-            kbBlog.insert();
+    @Transactional(rollbackFor = Exception.class)
+    public CommonResponse publishBlog(CommonRequest<KbBlogPublishDTO> commonRequest) {
+        KbBlogPublishDTO publishDTO = commonRequest.getData();
+        KbBlog blog = new KbBlog();
+        BeanUtils.copyProperties(publishDTO, blog);
+        blog.setPublishStatus(Objects.equals(publishDTO.getPublishStatus(), "yes") ? 1 : 0);
+        blog.setAppreciateStatus(Objects.equals(publishDTO.getAppreciateStatus(), "yes") ? 1 : 0);
+        blog.setCommentStatus(Objects.equals(publishDTO.getCommentStatus(), "yes") ? 1 : 0);
+        blog.setAppreciateStatus(Objects.equals(publishDTO.getAppreciateStatus(), "yes") ? 1 : 0);
+        if (!blog.insert()) {
+            return CommonResponse.<List<KbBlog>>builder().success(false).errMsg("博客发布失败").build();
+        }
+        // 保存博客详情
+        KbBlogDetail blogDetail = new KbBlogDetail();
+        blogDetail.setBlogId(blog.getId());
+        blogDetail.setContent(publishDTO.getContent());
+        if (!blogDetail.insert()) {
+            return CommonResponse.<List<KbBlog>>builder().success(false).errMsg("博客发布失败").build();
         }
         return CommonResponse.<List<KbBlog>>builder().success(true).build();
     }
