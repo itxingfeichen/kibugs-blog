@@ -7,15 +7,22 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.Date;
+
 /**
- * @author : chenxingfei
- * @date: 2019-11-06  07:54
- * @description: 博客详情
+ * <p>
+ * 博客分类映射表
+ * </p>
+ *
+ * @author jannik
+ * @since 2019-11-06
  */
 @Data
 @Accessors(chain = true)
-@TableName("kb_blog_detail")
-public class KbBlogDetail extends Model<KbBlogDetail> {
+@TableName("kb_blog_tag")
+public class KbBlogTag extends Model<KbBlogTag> {
+
+    private static final long serialVersionUID=1L;
 
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -26,7 +33,19 @@ public class KbBlogDetail extends Model<KbBlogDetail> {
     private Long blogId;
 
     /**
-     * 博客内容
+     * 标签id
      */
-    private String content;
+    private Long tagId;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+
 }

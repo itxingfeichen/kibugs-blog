@@ -5,7 +5,7 @@ spring:
   datasource:
     username: root
     password: 123456
-    url: jdbc:mysql://192.168.22.128:3306/kibugs-blog
+    url: jdbc:mysql://192.168.22.128:3306/kibugs-blog?allowMultiQueries=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
 #mybatis
 mybatis-plus:

@@ -3,13 +3,16 @@ package com.kibugs.blog.web.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kibug.blog.common.dto.KbBlogDTO;
+import com.kibug.blog.common.dto.KbBlogPublishDTO;
 import com.kibug.blog.common.entity.KbBlog;
 import com.kibug.blog.common.entity.KbCustomer;
 import com.kibug.blog.common.form.KbBlogPublishForm;
 import com.kibugs.blog.api.KbBlogDubboService;
+import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -74,11 +77,11 @@ public class KbBugsBlogService {
             }
         });
         try {
-            CompletableFuture.allOf(blogAndCategoryTop5Future,tagTop10AndRecommendFuture).get();
+            CompletableFuture.allOf(blogAndCategoryTop5Future, tagTop10AndRecommendFuture).get();
         } catch (InterruptedException e) {
-            log.info("首页加载InterruptedException异常",e);
+            log.info("首页加载InterruptedException异常", e);
         } catch (ExecutionException e) {
-            log.info("首页加载ExecutionException异常",e);
+            log.info("首页加载ExecutionException异常", e);
         }
 
     }
@@ -86,16 +89,17 @@ public class KbBugsBlogService {
 
     /**
      * 发布
+     *
      * @param blog
      * @param currentCustomer
      * @return
      */
-    public CommonResponse publishBlog(KbBlogPublishForm blog, KbCustomer currentCustomer){
-
-
-
-
-        return null;
+    public CommonResponse publishBlog(KbBlogPublishForm blog, KbCustomer currentCustomer) {
+        KbBlogPublishDTO kbBlogPublishDTO = new KbBlogPublishDTO();
+        BeanUtils.copyProperties(blog, kbBlogPublishDTO);
+        kbBlogPublishDTO.setCustomerId(currentCustomer.getId());
+        CommonRequest<KbBlogPublishDTO> commonRequest = CommonRequest.<KbBlogPublishDTO>builder().data(kbBlogPublishDTO).build();
+        return kbBlogDubboService.publishBlog(commonRequest);
     }
 
 

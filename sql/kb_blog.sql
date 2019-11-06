@@ -204,4 +204,24 @@ create table `kibugs-blog`.kb_blog_detail
   blog_id tinyint  not null comment '博客ID',
   content longtext not null comment '博客内容'
 );
+-- ----------------------------
+-- 2019-11-06
+-- ----------------------------
+alter table `kb_blog` convert to character set utf8;
 
+alter table `kb_blog_detail` convert to character set utf8;
+
+
+alter table `kb_blog_category` convert to character set utf8;
+
+alter table `kb_blog_tag` convert to character set utf8;
+
+alter table `kb_category` convert to character set utf8;
+
+alter table `kb_comment` convert to character set utf8;
+
+alter table `kb_customer` convert to character set utf8;
+
+alter table `kb_tag` convert to character set utf8;
+
+alter table `kb_praise` convert to character set utf8;

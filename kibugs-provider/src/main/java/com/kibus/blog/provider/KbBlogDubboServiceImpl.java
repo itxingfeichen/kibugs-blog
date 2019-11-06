@@ -7,13 +7,13 @@ import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibug.blog.common.dto.KbBlogPublishDTO;
 import com.kibug.blog.common.entity.KbBlog;
 import com.kibug.blog.common.entity.KbBlogDetail;
+import com.kibug.blog.common.entity.KbBlogTag;
 import com.kibug.blog.common.entity.KbCustomer;
 import com.kibugs.blog.api.KbBlogDubboService;
 import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
-import com.kibus.blog.service.IKbBlogService;
-import com.kibus.blog.service.IKbCategoryService;
-import com.kibus.blog.service.IKbCustomerService;
+import com.kibus.blog.service.*;
+import lombok.AllArgsConstructor;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +21,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * @author : chenxingfei
@@ -28,6 +29,7 @@ import java.util.Objects;
  * @description: 博客dubbo服务实现类
  */
 @Service(version = "1.0.0")
+@AllArgsConstructor
 public class KbBlogDubboServiceImpl implements KbBlogDubboService {
 
     private final IKbBlogService blogService;
@@ -36,11 +38,7 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
 
     private final IKbCategoryService iKbCategoryService;
 
-    public KbBlogDubboServiceImpl(IKbBlogService blogService, IKbCustomerService customerService, IKbCategoryService iKbCategoryService) {
-        this.blogService = blogService;
-        this.customerService = customerService;
-        this.iKbCategoryService = iKbCategoryService;
-    }
+    private final IKbBlogTagService blogTagService;
 
     @Override
     public CommonResponse<KbBlogDTO> getOne(Long id) {
@@ -88,10 +86,12 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
         KbBlogPublishDTO publishDTO = commonRequest.getData();
         KbBlog blog = new KbBlog();
         BeanUtils.copyProperties(publishDTO, blog);
-        blog.setPublishStatus(Objects.equals(publishDTO.getPublishStatus(), "yes") ? 1 : 0);
-        blog.setAppreciateStatus(Objects.equals(publishDTO.getAppreciateStatus(), "yes") ? 1 : 0);
-        blog.setCommentStatus(Objects.equals(publishDTO.getCommentStatus(), "yes") ? 1 : 0);
-        blog.setAppreciateStatus(Objects.equals(publishDTO.getAppreciateStatus(), "yes") ? 1 : 0);
+        blog.setPublishStatus(Integer.valueOf(publishDTO.getPublishStatus()));
+        blog.setAppreciateStatus(Objects.equals(publishDTO.getAppreciateStatus(), "on") ? 1 : 0);
+        blog.setCommentStatus(Objects.equals(publishDTO.getCommentStatus(), "on") ? 1 : 0);
+        blog.setAppreciateStatus(Objects.equals(publishDTO.getAppreciateStatus(), "on") ? 1 : 0);
+
+        blog.setCategoryId(Long.valueOf(publishDTO.getCategory()));
         if (!blog.insert()) {
             return CommonResponse.<List<KbBlog>>builder().success(false).errMsg("博客发布失败").build();
         }
@@ -102,6 +102,15 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
         if (!blogDetail.insert()) {
             return CommonResponse.<List<KbBlog>>builder().success(false).errMsg("博客发布失败").build();
         }
+
+        // 保存标签映射关系
+        Stream.of(publishDTO.getTags().split(",")).forEach(tagId->{
+            KbBlogTag kbBlogTag = new KbBlogTag();
+            kbBlogTag.setBlogId(blog.getId());
+            kbBlogTag.setTagId(Long.valueOf(tagId));
+            kbBlogTag.insert();
+        });
+
         return CommonResponse.<List<KbBlog>>builder().success(true).build();
     }
 

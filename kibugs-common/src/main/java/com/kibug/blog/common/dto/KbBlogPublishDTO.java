@@ -19,6 +19,11 @@ public class KbBlogPublishDTO implements Serializable {
     private Long id;
 
     /**
+     * 客户ID
+     */
+    private Long customerId;
+
+    /**
      * 博客标题
      */
     private String title;
