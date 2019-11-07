@@ -5,14 +5,14 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibug.blog.common.dto.KbBlogPublishDTO;
-import com.kibug.blog.common.entity.KbBlog;
-import com.kibug.blog.common.entity.KbBlogDetail;
-import com.kibug.blog.common.entity.KbBlogTag;
-import com.kibug.blog.common.entity.KbCustomer;
+import com.kibug.blog.common.entity.*;
 import com.kibugs.blog.api.KbBlogDubboService;
 import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
-import com.kibus.blog.service.*;
+import com.kibus.blog.service.IKbBlogService;
+import com.kibus.blog.service.IKbCategoryService;
+import com.kibus.blog.service.IKbCommentService;
+import com.kibus.blog.service.IKbCustomerService;
 import lombok.AllArgsConstructor;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.BeanUtils;
@@ -20,7 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -36,19 +39,58 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
 
     private final IKbCustomerService customerService;
 
+    private final IKbCommentService commentService;
+
     private final IKbCategoryService iKbCategoryService;
 
-    private final IKbBlogTagService blogTagService;
 
     @Override
     public CommonResponse<KbBlogDTO> getOne(Long id) {
         KbBlog kbBlog = blogService.getById(id);
-        if (kbBlog != null) {
-            KbBlogDTO kbBlogDTO = new KbBlogDTO();
-            BeanUtils.copyProperties(kbBlog, kbBlogDTO);
-            return CommonResponse.<KbBlogDTO>builder().success(true).data(kbBlogDTO).build();
+        if (kbBlog == null) {
+            return CommonResponse.<KbBlogDTO>builder().success(false).errMsg("未查到博客").build();
         }
-        return CommonResponse.<KbBlogDTO>builder().success(true).build();
+        KbBlogDTO kbBlogDTO = new KbBlogDTO();
+        BeanUtils.copyProperties(kbBlog, kbBlogDTO);
+        // 构建用户信息和评论信息线程
+        CompletableFuture.runAsync(() -> {
+            KbCustomer customer = new KbCustomer();
+            customer.setId(kbBlog.getCustomerId());
+            KbCustomer kbCustomer = customerService.getOne(Wrappers.query());
+            kbBlogDTO.setCustomer(kbCustomer);
+
+        }).thenRun(() -> {
+            List<KbComment> kbComments = commentService.lambdaQuery().eq(KbComment::getBlogId, kbBlog.getId()).list();
+            if (CollectionUtils.isEmpty(kbComments)) {
+                return;
+            }
+            Map<Long, List<KbComment>> comments = kbComments.stream().collect(Collectors.groupingBy(KbComment::getCustomerId));
+            comments.forEach((customerId, kbComments1) -> {
+                if(id  == null){
+                    // todo
+                }
+            });
+
+
+        });
+
+        /**
+         * 构建标签和分类信息线程
+         */
+        CompletableFuture.runAsync(() -> {
+
+
+        });
+
+
+        // 查询detail的数据
+        KbBlogDetail blogDetail = new KbBlogDetail();
+        blogDetail.setBlogId(id);
+        KbBlogDetail detail = blogDetail.selectOne(Wrappers.lambdaQuery(blogDetail));
+        if (detail != null) {
+            kbBlogDTO.setContent(detail.getContent());
+        }
+        return CommonResponse.<KbBlogDTO>builder().success(true).data(kbBlogDTO).build();
     }
 
     @Override
@@ -104,7 +146,7 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
         }
 
         // 保存标签映射关系
-        Stream.of(publishDTO.getTags().split(",")).forEach(tagId->{
+        Stream.of(publishDTO.getTags().split(",")).forEach(tagId -> {
             KbBlogTag kbBlogTag = new KbBlogTag();
             kbBlogTag.setBlogId(blog.getId());
             kbBlogTag.setTagId(Long.valueOf(tagId));

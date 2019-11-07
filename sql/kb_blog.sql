@@ -225,3 +225,5 @@ alter table `kb_customer` convert to character set utf8;
 alter table `kb_tag` convert to character set utf8;
 
 alter table `kb_praise` convert to character set utf8;
+
+alter table `kb_comment` add  `delete_status` tinyint default 0  null comment '删除状态（1：已删除，0：未删除）

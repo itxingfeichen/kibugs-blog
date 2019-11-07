@@ -1,6 +1,9 @@
 package com.kibug.blog.common.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -17,13 +20,13 @@ import java.util.Date;
  * @since 2019-11-01
  */
 @Data
-
+@TableName(value = "kb_comment")
 @Accessors(chain = true)
 public class KbComment extends Model<KbComment> implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -55,6 +58,12 @@ public class KbComment extends Model<KbComment> implements Serializable {
      * 评论内容
      */
     private String content;
+
+    /**
+     * 删除标记
+     */
+    @TableLogic
+    private Integer deleteStatus;
 
     /**
      * 更新时间

@@ -6,9 +6,7 @@ import com.kibug.blog.common.form.KbBlogPublishForm;
 import com.kibugs.blog.common.CommonResponse;
 import com.kibugs.blog.web.service.KbBugsBlogService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,10 +28,17 @@ public class KiBugsBlogController extends BaseController {
         this.kiBugsBlogService = kiBugsBlogService;
     }
 
-    @RequestMapping("getBlogById")
-    @ResponseBody
-    public KbBlogDTO getBlogById(Long id) {
-        return kiBugsBlogService.getBlogById(id);
+    /**
+     * 博客详情
+     * @param id
+     * @return
+     */
+    @RequestMapping("detail/{id}")
+    public ModelAndView getBlogById(@PathVariable Long id) {
+        ModelAndView modelAndView = new ModelAndView("/blog/detail");
+        KbBlogDTO blogDTO = kiBugsBlogService.getBlogById(id);
+        modelAndView.addObject("blog",blogDTO);
+        return modelAndView;
     }
 
     /**
@@ -44,9 +49,9 @@ public class KiBugsBlogController extends BaseController {
      */
     @RequestMapping("gotoPublish")
     public ModelAndView gotoPublish(HttpServletRequest request) {
-        final KbCustomer kbCustomer = getCurrentCustomer(request);
-        final ModelAndView modelAndView = new ModelAndView("/publish/publish");
-        modelAndView.addObject("customer", kbCustomer);
+//        final KbCustomer kbCustomer = getCurrentCustomer(request);
+        final ModelAndView modelAndView = new ModelAndView("/blog/publish");
+//        modelAndView.addObject("customer", kbCustomer);
         return modelAndView;
     }
 
@@ -65,6 +70,12 @@ public class KiBugsBlogController extends BaseController {
             modelAndView.setViewName("redirect:/index");
         }
         return modelAndView;
+    }
+
+    @ModelAttribute(value = "customer")
+    public KbCustomer customer(HttpServletRequest request){
+
+        return getCurrentCustomer(request);
     }
 
 

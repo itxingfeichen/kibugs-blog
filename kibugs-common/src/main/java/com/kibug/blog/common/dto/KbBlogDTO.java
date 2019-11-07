@@ -1,9 +1,13 @@
 package com.kibug.blog.common.dto;
 
+import com.kibug.blog.common.entity.KbCategory;
+import com.kibug.blog.common.entity.KbCustomer;
+import com.kibug.blog.common.entity.KbTag;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -28,7 +32,7 @@ public class KbBlogDTO implements Serializable {
     /**
      * 博客内容
      */
-    private String context;
+    private String content;
 
     /**
      * 发布状态（1：已发布，0：待发布）
@@ -56,14 +60,30 @@ public class KbBlogDTO implements Serializable {
     private Integer appreciateStatus;
 
     /**
-     * 分类ID
+     * 分类
      */
-    private Long categoryId;
+    private KbCategory category;
+
+    /**
+     * 标签
+     */
+    private List<KbTag> tags;
+
+    /**
+     * 发布这信息
+     */
+    private KbCustomer customer;
+
+    /**
+     * 评论
+     */
+    private List<KbCommentDTO> comments;
 
     /**
      * 发布时间
      */
     private Date publishTime;
+
 
     /**
      * 创建时间
