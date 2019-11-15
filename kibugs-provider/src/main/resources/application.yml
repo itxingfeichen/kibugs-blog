@@ -42,3 +42,7 @@ dubbo:
     port: 12345
   registry:
     address: zookeeper://192.168.22.128:2181
+  provider:
+    timeout: 5000
+  consumer:
+    timeout: 5000

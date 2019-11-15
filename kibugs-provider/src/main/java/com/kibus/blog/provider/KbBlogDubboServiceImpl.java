@@ -9,10 +9,7 @@ import com.kibug.blog.common.entity.*;
 import com.kibugs.blog.api.KbBlogDubboService;
 import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
-import com.kibus.blog.service.IKbBlogService;
-import com.kibus.blog.service.IKbCategoryService;
-import com.kibus.blog.service.IKbCommentService;
-import com.kibus.blog.service.IKbCustomerService;
+import com.kibus.blog.service.*;
 import lombok.AllArgsConstructor;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.BeanUtils;
@@ -41,7 +38,11 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
 
     private final IKbCommentService commentService;
 
-    private final IKbCategoryService iKbCategoryService;
+    private final IKbCategoryService categoryService;
+
+    private final IKbBlogTagService blogTagService;
+
+    private final IKbTagService tagService;
 
 
     @Override
@@ -53,7 +54,7 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
         KbBlogDTO kbBlogDTO = new KbBlogDTO();
         BeanUtils.copyProperties(kbBlog, kbBlogDTO);
         // 构建用户信息和评论信息线程
-        CompletableFuture.runAsync(() -> {
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
             KbCustomer customer = new KbCustomer();
             customer.setId(kbBlog.getCustomerId());
             KbCustomer kbCustomer = customerService.getOne(Wrappers.query());
@@ -66,7 +67,7 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
             }
             Map<Long, List<KbComment>> comments = kbComments.stream().collect(Collectors.groupingBy(KbComment::getCustomerId));
             comments.forEach((customerId, kbComments1) -> {
-                if(id  == null){
+                if (id == null) {
                     // todo
                 }
             });
@@ -77,12 +78,17 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
         /**
          * 构建标签和分类信息线程
          */
-        CompletableFuture.runAsync(() -> {
-
+        CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
+            kbBlogDTO.setCategory(categoryService.getById(kbBlog.getCategoryId()));
+            // 查询标签信息
+            List<KbBlogTag> blogTags = blogTagService.lambdaQuery().eq(KbBlogTag::getBlogId, kbBlogDTO.getId()).list();
+            if (!CollectionUtils.isEmpty(blogTags)) {
+                List<KbTag> tagList = tagService.lambdaQuery().in(KbTag::getId, blogTags.stream().map(KbBlogTag::getTagId).collect(Collectors.toSet())).list();
+                kbBlogDTO.setTags(tagList);
+            }
 
         });
-
-
+        CompletableFuture.allOf(future,completableFuture);
         // 查询detail的数据
         KbBlogDetail blogDetail = new KbBlogDetail();
         blogDetail.setBlogId(id);
@@ -104,7 +110,7 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
         records.forEach(kbBlog -> {
             KbCustomer customer = customerService.getOne(Wrappers.<KbCustomer>lambdaQuery().select(KbCustomer.class, info -> Objects.equals(info.getColumn(), "nickname") || Objects.equals(info.getColumn(), "avatar_url")).eq(KbCustomer::getId, kbBlog.getCustomerId()));
             kbBlog.setCustomer(customer);
-            kbBlog.setCategory(iKbCategoryService.getById(kbBlog.getCategoryId()));
+            kbBlog.setCategory(categoryService.getById(kbBlog.getCategoryId()));
         });
         return CommonResponse.<IPage<KbBlog>>builder().data(iPage).build();
     }

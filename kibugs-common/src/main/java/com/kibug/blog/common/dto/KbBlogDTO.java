@@ -84,6 +84,10 @@ public class KbBlogDTO implements Serializable {
      */
     private Date publishTime;
 
+    /**
+     * 查看次数
+     */
+    private Integer views;
 
     /**
      * 创建时间
