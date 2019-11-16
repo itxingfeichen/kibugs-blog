@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: kibugs-admin
+  http:
+    encoding:
+      force: true
+      charset: utf-8
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    host: 192.168.22.128
+#    password: 123456
+dubbo:
+  application: ${spring.application.name}
+  registry:
+    address: zookeeper://192.168.22.128:2181
+    check: false
+api:
+  prifix: admin/server

@@ -60,6 +60,6 @@ public class KbBlogCustomerDubboServiceImpl implements KbBlogCustomerDubboServic
         if (customer == null) {
             return CommonResponse.<KbCustomer>builder().success(false).errMsg("登录账号或密码错误").build();
         }
-        return CommonResponse.<KbCustomer>builder().data(customer).success(true).build();
+        return CommonResponse.success(customer);
     }
 }

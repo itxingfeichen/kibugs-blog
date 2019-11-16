@@ -1,6 +1,10 @@
 package com.kibus.blog.provider;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.kibug.blog.common.entity.KbCategory;
 import com.kibugs.blog.api.KbBlogCategoryDubboService;
+import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
 import com.kibus.blog.service.IKbBlogService;
 import com.kibus.blog.service.IKbCategoryService;
@@ -30,5 +34,24 @@ public class KbBlogCategoryDubboServiceImpl implements KbBlogCategoryDubboServic
     public CommonResponse<List<Map<String, Integer>>> getCategoryTop5() {
         List<Map<String, Integer>> categoryTop5 = categoryService.getCategoryTop5();
         return CommonResponse.<List<Map<String, Integer>>>builder().data(categoryTop5).build();
+    }
+
+
+    @Override
+    public CommonResponse<IPage<KbCategory>> list(IPage page, KbCategory category) {
+        IPage iPage = categoryService.page(page, Wrappers.lambdaQuery(category));
+        return CommonResponse.success(iPage);
+    }
+
+    @Override
+    public CommonResponse createOrUpdate(CommonRequest<KbCategory> categoryCommonRequest) {
+
+        KbCategory entity = categoryCommonRequest.getData();
+        boolean orUpdate = categoryService.saveOrUpdate(entity);
+        if (orUpdate) {
+            return CommonResponse.success();
+        } else {
+            return CommonResponse.error();
+        }
     }
 }

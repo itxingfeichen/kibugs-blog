@@ -15,6 +15,7 @@
         <module>kibugs-provider</module>
         <module>kibugs-web</module>
         <module>kibugs-common</module>
+        <module>kibugs-admin</module>
     </modules>
 
     <dependencyManagement>

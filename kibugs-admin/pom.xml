@@ -1,17 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.kibugs</groupId>
         <artifactId>kibugs</artifactId>
+        <groupId>com.kibugs</groupId>
         <version>v1.0.0</version>
     </parent>
-    <groupId>com.kibugs</groupId>
-    <artifactId>kibugs-web</artifactId>
-    <version>v1.0.0</version>
-    <packaging>jar</packaging>
-    <name>${project.artifactId}</name>
-    <description>The demo consumer module of dubbo project</description>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>kibugs-admin</artifactId>
     <properties>
         <skip_maven_deploy>true</skip_maven_deploy>
         <slf4j-log4j12.version>1.7.25</slf4j-log4j12.version>
@@ -65,15 +63,15 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
-         <dependency>
-             <groupId>org.springframework.session</groupId>
-             <artifactId>spring-session-data-redis</artifactId>
-         </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
 
-         <dependency>
-             <groupId>org.springframework.security</groupId>
-             <artifactId>spring-security-web</artifactId>
-         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
 
     </dependencies>
 
@@ -101,4 +99,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
