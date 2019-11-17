@@ -3,7 +3,9 @@ package com.kibug.blog.admin.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.kibug.blog.admin.service.BaseManagementService;
 import com.kibugs.blog.common.CommonResponse;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author : chenxingfei
@@ -26,7 +28,7 @@ public abstract class BaseManagementController<T> {
      * @return
      */
     @RequestMapping("createOrUpdate")
-    public CommonResponse createOrUpdate(T entity) {
+    public CommonResponse createOrUpdate(@RequestBody T entity) {
         return getService().createOrUpdate(entity);
     }
 
@@ -54,12 +56,12 @@ public abstract class BaseManagementController<T> {
     /**
      * 分页查询
      * @param current
-     * @param pageSize
+     * @param limit
      * @return
      */
     @RequestMapping("page")
-    public CommonResponse<IPage<T>> page(Integer current,Integer pageSize) {
-        return getService().page(current,pageSize);
+    public CommonResponse<IPage<T>> page(@RequestParam("page") Integer current, @RequestParam("limit")  Integer limit) {
+        return getService().page(current,limit);
     }
 
 
