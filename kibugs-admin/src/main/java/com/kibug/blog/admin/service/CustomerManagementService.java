@@ -2,6 +2,7 @@ package com.kibug.blog.admin.service;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kibug.blog.common.entity.KbCustomer;
 import com.kibug.blog.common.form.KbCustomerForm;
 import com.kibugs.blog.api.KbBlogCustomerDubboService;
@@ -25,7 +26,7 @@ import java.util.UUID;
 public class CustomerManagementService implements BaseManagementService<KbCustomer> {
 
     @Reference(version = "1.0.0")
-    private KbBlogCustomerDubboService customerDubboService;
+    private KbBlogCustomerDubboService<KbCustomer> customerDubboService;
 
     private final StringRedisTemplate redisTemplate;
 
@@ -60,22 +61,33 @@ public class CustomerManagementService implements BaseManagementService<KbCustom
     }
 
     @Override
-    public CommonResponse createOrUpdate(KbCustomer kbCustomer) {
-        return null;
+    public CommonResponse createOrUpdate(KbCustomer kbTag) {
+        boolean saveOrUpdate = customerDubboService.saveOrUpdate(kbTag);
+        if (saveOrUpdate) {
+            return CommonResponse.success();
+        }
+        return CommonResponse.error();
     }
 
     @Override
     public CommonResponse deleteById(Long id) {
-        return null;
+        boolean saveOrUpdate = customerDubboService.removeById(id);
+        if (saveOrUpdate) {
+            return CommonResponse.success();
+        }
+        return CommonResponse.error();
     }
 
     @Override
     public CommonResponse<KbCustomer> getById(Long id) {
-        return null;
+        KbCustomer kbTag = customerDubboService.getById(id);
+        return CommonResponse.success(kbTag);
     }
 
     @Override
     public CommonResponse<IPage<KbCustomer>> page(Integer current, Integer pageSize) {
-        return null;
+        Page<KbCustomer> kbTagPage = new Page<>(current, pageSize);
+        IPage<KbCustomer> page = customerDubboService.page(kbTagPage);
+        return CommonResponse.success(page);
     }
 }
