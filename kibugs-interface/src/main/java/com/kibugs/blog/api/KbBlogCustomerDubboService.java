@@ -1,5 +1,6 @@
 package com.kibugs.blog.api;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
 import com.kibugs.blog.request.CustomerIntoDTO;
@@ -9,7 +10,7 @@ import com.kibugs.blog.request.CustomerIntoDTO;
  * @date: 2019-11-04  21:27
  * @description: 客户dubbo服务
  */
-public interface KbBlogCustomerDubboService {
+public interface KbBlogCustomerDubboService<T> extends IService<T> {
 
     /**
      * 注册

@@ -1,6 +1,7 @@
 package com.kibug.blog.admin.service;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.kibug.blog.common.entity.KbCustomer;
 import com.kibug.blog.common.form.KbCustomerForm;
 import com.kibugs.blog.api.KbBlogCustomerDubboService;
@@ -21,7 +22,7 @@ import java.util.UUID;
  * @description: 客户信息管理
  */
 @Service
-public class CustomerManagementService {
+public class CustomerManagementService implements BaseManagementService<KbCustomer> {
 
     @Reference(version = "1.0.0")
     private KbBlogCustomerDubboService customerDubboService;
@@ -56,5 +57,25 @@ public class CustomerManagementService {
             return CommonResponse.error(CommonResponse.ResponseStatusEnum.TOKEN_INVALID);
         }
         return CommonResponse.success(JSON.parseObject(userInfo,KbCustomerForm.class));
+    }
+
+    @Override
+    public CommonResponse createOrUpdate(KbCustomer kbCustomer) {
+        return null;
+    }
+
+    @Override
+    public CommonResponse deleteById(Long id) {
+        return null;
+    }
+
+    @Override
+    public CommonResponse<KbCustomer> getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public CommonResponse<IPage<KbCustomer>> page(Integer current, Integer pageSize) {
+        return null;
     }
 }

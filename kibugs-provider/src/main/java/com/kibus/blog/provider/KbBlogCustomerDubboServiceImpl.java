@@ -1,11 +1,13 @@
 package com.kibus.blog.provider;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kibug.blog.common.entity.KbCustomer;
 import com.kibugs.blog.api.KbBlogCustomerDubboService;
 import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
 import com.kibugs.blog.request.CustomerIntoDTO;
+import com.kibus.blog.mapper.KbCustomerMapper;
 import com.kibus.blog.service.IKbCustomerService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Service;
@@ -16,7 +18,7 @@ import org.apache.dubbo.config.annotation.Service;
  * @description: 客户dubbo服务
  */
 @Service(version = "1.0.0")
-public class KbBlogCustomerDubboServiceImpl implements KbBlogCustomerDubboService {
+public class KbBlogCustomerDubboServiceImpl extends ServiceImpl<KbCustomerMapper, KbCustomer> implements KbBlogCustomerDubboService<KbCustomer> {
 
     private final IKbCustomerService customerService;
 

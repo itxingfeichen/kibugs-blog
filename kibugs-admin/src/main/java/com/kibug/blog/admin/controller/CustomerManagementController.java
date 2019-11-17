@@ -1,6 +1,8 @@
 package com.kibug.blog.admin.controller;
 
+import com.kibug.blog.admin.service.BaseManagementService;
 import com.kibug.blog.admin.service.CustomerManagementService;
+import com.kibug.blog.common.entity.KbCustomer;
 import com.kibug.blog.common.form.KbCustomerForm;
 import com.kibugs.blog.common.CommonResponse;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/admin/server/user")
-public class CustomerManagementController {
+public class CustomerManagementController extends BaseManagementController<KbCustomer> {
 
     private final CustomerManagementService managementService;
+
+
+    @Override
+    protected BaseManagementService<KbCustomer> getService() {
+        return managementService;
+    }
 
     public CustomerManagementController(CustomerManagementService managementService) {
         this.managementService = managementService;
