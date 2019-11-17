@@ -6,12 +6,14 @@ import com.kibug.blog.common.entity.KbTag;
 import com.kibugs.blog.api.KbTagDubboService;
 import com.kibugs.blog.common.CommonResponse;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.stereotype.Service;
 
 /**
  * @author : chenxingfei
  * @date: 2019-11-16  23:15
  * @description: 标签服务
  */
+@Service
 public class TagManagementService implements BaseManagementService<KbTag> {
 
     @Reference(version = "1.0.0")

@@ -57,7 +57,7 @@ public abstract class BaseManagementController<T> {
      * @param pageSize
      * @return
      */
-    @RequestMapping("getById")
+    @RequestMapping("page")
     public CommonResponse<IPage<T>> page(Integer current,Integer pageSize) {
         return getService().page(current,pageSize);
     }

@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping(value = "admin/server/")
-public class KbTagManagementController extends BaseManagementController<KbTag> {
+@RequestMapping(value = "admin/server/tag")
+public class TagManagementController extends BaseManagementController<KbTag> {
 
     private final TagManagementService tagManagementService;
 
-    public KbTagManagementController(TagManagementService tagManagementService) {
+    public TagManagementController(TagManagementService tagManagementService) {
         this.tagManagementService = tagManagementService;
     }
 
