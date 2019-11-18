@@ -1,15 +1,24 @@
 package com.kibugs.blog.web.web;
 
 import com.kibug.blog.common.dto.KbBlogDTO;
+import com.kibug.blog.common.entity.KbCategory;
 import com.kibug.blog.common.entity.KbCustomer;
+import com.kibug.blog.common.entity.KbTag;
 import com.kibug.blog.common.form.KbBlogPublishForm;
 import com.kibugs.blog.common.CommonResponse;
 import com.kibugs.blog.web.service.KbBugsBlogService;
+import com.kibugs.blog.web.service.KbCategoryService;
+import com.kibugs.blog.web.service.KbTagService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+
 
 /**
  * @author：jannik
@@ -24,8 +33,15 @@ public class KiBugsBlogController extends BaseController {
 
     private final KbBugsBlogService kiBugsBlogService;
 
-    public KiBugsBlogController(KbBugsBlogService kiBugsBlogService) {
+    private final KbCategoryService categoryService;
+
+    private final KbTagService tagService;
+
+
+    public KiBugsBlogController(KbBugsBlogService kiBugsBlogService, KbCategoryService categoryService, KbTagService tagService) {
         this.kiBugsBlogService = kiBugsBlogService;
+        this.categoryService = categoryService;
+        this.tagService = tagService;
     }
 
     /**
@@ -50,8 +66,11 @@ public class KiBugsBlogController extends BaseController {
     @RequestMapping("gotoPublish")
     public ModelAndView gotoPublish(HttpServletRequest request) {
 //        final KbCustomer kbCustomer = getCurrentCustomer(request);
+        List<KbTag>  tags = tagService.getAllTags();
+        List<KbCategory> allCategories = categoryService.getAllCategories();
         final ModelAndView modelAndView = new ModelAndView("/blog/publish");
-//        modelAndView.addObject("customer", kbCustomer);
+        modelAndView.addObject("tags", tags);
+        modelAndView.addObject("allCategories", tags);
         return modelAndView;
     }
 

@@ -1,7 +1,9 @@
 package com.kibugs.blog.web.service;
 
 
+import com.kibug.blog.common.entity.KbCategory;
 import com.kibugs.blog.api.KbBlogCategoryDubboService;
+import com.kibugs.blog.common.CommonResponse;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +31,17 @@ public class KbCategoryService {
      * @return
      */
     public List<Map<String,Integer>> getCategoryTop5(){
-        return blogCategoryDubboService.getCategoryTop5().getData();
+        CommonResponse commonResponse = blogCategoryDubboService.getCategoryTop5();
+        return (List<Map<String, Integer>>) commonResponse.getData();
+    }
+
+
+    /**
+     * 获取所有分类
+     * @return
+     */
+    public List<KbCategory> getAllCategories() {
+        return blogCategoryDubboService.list();
     }
 
 }

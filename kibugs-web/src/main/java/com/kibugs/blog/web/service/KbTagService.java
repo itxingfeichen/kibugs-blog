@@ -1,7 +1,9 @@
 package com.kibugs.blog.web.service;
 
 
+import com.kibug.blog.common.entity.KbTag;
 import com.kibugs.blog.api.KbBlogTagDubboService;
+import com.kibugs.blog.api.KbTagDubboService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ public class KbTagService {
     @Reference(version = "1.0.0")
     private KbBlogTagDubboService blogTagDubboService;
 
+    @Reference(version = "1.0.0")
+    private KbTagDubboService<KbTag> tagKbTagDubboService;
+
     /**
      * 获取top5标签（默认返回博客数量最多的5种标签）
      * @return
@@ -31,5 +36,12 @@ public class KbTagService {
         return blogTagDubboService.getTagsForTop10().getData();
     }
 
+    /**
+     * 获取所有标签
+     * @return
+     */
+    public List<KbTag> getAllTags() {
+        return tagKbTagDubboService.list();
+    }
 }
 

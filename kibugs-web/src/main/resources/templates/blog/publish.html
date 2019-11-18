@@ -56,8 +56,8 @@
                             <i class="dropdown icon"></i>
                             <div class="default text">分类</div>
                             <div class="menu">
-                                <div class="item" data-value="1">错误日志</div>
-                                <div class="item" data-value="2">开发着手册</div>
+
+                                <div class="item" th:attr="data-value=${category.id}" th:text="${category.name}"  th:each="category : ${allCategories}">错误日志</div>
                             </div>
                         </div>
                     </div>
@@ -70,8 +70,7 @@
                             <i class="dropdown icon"></i>
                             <div class="default text">标签</div>
                             <div class="menu">
-                                <div class="item" data-value="1">错误日志</div>
-                                <div class="item" data-value="2">开发着手册</div>
+                                <div class="item" th:attr="data-value=${tag.id}" th:text="${tag.name}"  th:each="tag : ${tags}">错误日志</div>
                             </div>
                         </div>
                     </div>

@@ -30,7 +30,7 @@ import java.util.stream.Stream;
  */
 @Service(version = "1.0.0")
 @AllArgsConstructor
-public class KbBlogDubboServiceImpl implements KbBlogDubboService {
+public class KbBlogDubboServiceImpl  implements KbBlogDubboService {
 
     private final IKbBlogService blogService;
 
@@ -88,7 +88,11 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
             }
 
         });
-        CompletableFuture.allOf(future,completableFuture);
+        try {
+            CompletableFuture.allOf(future,completableFuture).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // 查询detail的数据
         KbBlogDetail blogDetail = new KbBlogDetail();
         blogDetail.setBlogId(id);

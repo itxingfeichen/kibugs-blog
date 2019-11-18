@@ -51,7 +51,7 @@
 
             <!--标签-->
             <div class="ki-padded-lr-response">
-                <div class="ui basic label teal left pointing">方法轮</div>
+                <div class="ui basic label teal left pointing" th:each="tag : ${blog.tags}" th:text="${tag.name}">方法轮</div>
             </div>
             <!--打赏-->
             <div class="ui center aligned basic segment">
@@ -61,12 +61,12 @@
                 <div class="ui orange basic label">
                     <div class="ui images" style="font-size: inherit !important;">
                         <div class="image">
-                            <img src="./static/images/WechatIMG.jpeg" alt="微信" class="ui rounded bordered image"
+                            <img th:src="@{/images/WechatIMG.jpeg}" alt="微信" class="ui rounded bordered image"
                                  style="width: 120px">
                             <div>微信</div>
                         </div>
                         <div class="image">
-                            <img src="./static/images/WechatIMG.jpeg" alt="支付宝" class="ui rounded bordered image "
+                            <img th:src="@{/images/WechatIMG.jpeg}" alt="支付宝" class="ui rounded bordered image "
                                  style="width: 120px">
                             <div>支付宝</div>
                         </div>
@@ -79,13 +79,12 @@
             <div class="ui middle aligned grid">
                 <div class="eleven wide column">
                     <ui class="list">
-                        <li class="">作者：xxx</li>
-                        <li class="">发布时间：xxx</li>
-                        <li class="">发布时间：xxx</li>
+                        <li class="">作者：<span th:text="${blog.customer.nickname}"></span></li>
+                        <li class="">发布时间：<span th:text="${#dates.format(blog.publishTime,'yyyy-MM-dd HH:mm:ss')}"> </span></li>
                     </ui>
                 </div>
                 <div class="five wide column">
-                    <img src="./static/images/WechatIMG.jpeg" alt="" class="ui rounded right floated bordered image"
+                    <img th:src="@{/images/WechatIMG.jpeg}" alt="" class="ui rounded right floated bordered image"
                          style="width: 110px">
                 </div>
             </div>
