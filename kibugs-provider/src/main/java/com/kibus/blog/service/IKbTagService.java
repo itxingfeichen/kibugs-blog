@@ -22,4 +22,11 @@ public interface IKbTagService extends IService<KbTag> {
      */
     List<Map<String,Integer>> getTagsForTop10();
 
+
+    /**
+     * 获取所有标签
+     * @return
+     */
+    List<Map<String, Integer>> getAllTags();
+
 }

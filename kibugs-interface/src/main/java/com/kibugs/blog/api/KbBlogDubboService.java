@@ -8,6 +8,7 @@ import com.kibugs.blog.common.CommonRequest;
 import com.kibugs.blog.common.CommonResponse;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author : chenxingfei
@@ -31,7 +32,7 @@ public interface KbBlogDubboService {
      * @param page
      * @return
      */
-    CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page, KbBlog blog);
+    CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page, KbBlog blog, Set<Long> ids);
 
     /**
      * 获取首页推荐数据

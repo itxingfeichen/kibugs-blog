@@ -1,8 +1,11 @@
 package com.kibugs.blog.web.web;
 
 
+import com.kibugs.blog.web.service.KbBugsBlogService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * <p>
@@ -14,7 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/blog/kb-tag")
-public class KbTagController extends BaseController {
+public class KbTagController {
+
+    private final KbBugsBlogService blogService;
+
+    public KbTagController(KbBugsBlogService blogService) {
+        this.blogService = blogService;
+    }
+
+    /**
+     * 跳转到分类首页
+     *
+     * @param categoryId 分类ID
+     * @param tagId      标签ID
+     * @return ModelAndView
+     */
+    @RequestMapping("index")
+    public ModelAndView toIndex(@RequestParam(value = "categoryId", required = false) Long categoryId, @RequestParam(value = "tagId", required = false) Long tagId) {
+        ModelAndView modelAndView = new ModelAndView("/tag/index");
+        blogService.indexPageForTag(modelAndView, tagId);
+        return modelAndView;
+    }
 
 }
 

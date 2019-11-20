@@ -19,6 +19,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -104,8 +105,16 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
     }
 
     @Override
-    public CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page, KbBlog blog) {
-        IPage<KbBlog> iPage = blogService.page(page, Wrappers.lambdaQuery(blog).orderByDesc(KbBlog::getUpdateTime));
+    public CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page, KbBlog blog, Set<Long> ids) {
+        IPage<KbBlog> iPage;
+        if (blog != null) {
+            iPage =  blogService.page(page, Wrappers.lambdaQuery(blog).orderByDesc(KbBlog::getUpdateTime));
+        }
+        else if(!CollectionUtils.isEmpty(ids)){
+            iPage =   blogService.page(page, Wrappers.<KbBlog>lambdaQuery().in(KbBlog::getId,ids).orderByDesc(KbBlog::getUpdateTime));
+        }else{
+            iPage =  blogService.page(page, Wrappers.<KbBlog>lambdaQuery().orderByDesc(KbBlog::getUpdateTime));
+        }
         List<KbBlog> records = iPage.getRecords();
         if (CollectionUtils.isEmpty(records)) {
             return CommonResponse.<IPage<KbBlog>>builder().build();

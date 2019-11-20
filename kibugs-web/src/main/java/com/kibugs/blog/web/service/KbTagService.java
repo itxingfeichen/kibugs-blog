@@ -33,7 +33,7 @@ public class KbTagService {
      * @return
      */
     public List<Map<String,Integer>> getTagsForTop10(){
-        return blogTagDubboService.getTagsForTop10().getData();
+        return (List<Map<String, Integer>>) blogTagDubboService.getTagsForTop10().getData();
     }
 
     /**

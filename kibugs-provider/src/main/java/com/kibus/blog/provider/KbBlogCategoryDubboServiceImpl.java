@@ -21,7 +21,7 @@ import java.util.Map;
  * @description: 博客分类dubbo服务
  */
 @Service(version = "1.0.0")
-public class KbBlogCategoryDubboServiceImpl   extends ServiceImpl<KbCategoryMapper, KbCategory> implements KbBlogCategoryDubboService<KbCategory> {
+public class KbBlogCategoryDubboServiceImpl extends ServiceImpl<KbCategoryMapper, KbCategory> implements KbBlogCategoryDubboService<KbCategory> {
 
     private final IKbBlogService blogService;
 
@@ -40,7 +40,7 @@ public class KbBlogCategoryDubboServiceImpl   extends ServiceImpl<KbCategoryMapp
 
     @Override
     public CommonResponse<List<Map<String, Integer>>> getAllCategory() {
-        List<Map<String, Integer>> categories= categoryService.getAllCategory();
+        List<Map<String, Integer>> categories = categoryService.getAllCategory();
         return CommonResponse.<List<Map<String, Integer>>>builder().data(categories).build();
     }
 

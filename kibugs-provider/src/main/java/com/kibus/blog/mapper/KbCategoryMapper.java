@@ -30,7 +30,7 @@ public interface KbCategoryMapper extends BaseMapper<KbCategory> {
      * 获取所有分类
      * @return
      */
-    @Select({"select category.name,count(blog.category_id) num from kb_blog blog left join kb_category category on blog.category_id = category.id group by blog.category_id;"})
+    @Select({"select category.id id,category.name,count(blog.category_id) num from kb_blog blog left join kb_category category on blog.category_id = category.id group by blog.category_id;"})
     List<Map<String,Integer>>  getAllCategory();
 
 }

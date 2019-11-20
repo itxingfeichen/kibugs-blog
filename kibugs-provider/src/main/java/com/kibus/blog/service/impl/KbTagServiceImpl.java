@@ -31,4 +31,9 @@ public class KbTagServiceImpl extends ServiceImpl<KbTagMapper, KbTag> implements
     public List<Map<String, Integer>> getTagsForTop10() {
         return tagMapper.getTagsForTop10();
     }
+
+    @Override
+    public List<Map<String, Integer>> getAllTags() {
+        return tagMapper.getAllTags();
+    }
 }
