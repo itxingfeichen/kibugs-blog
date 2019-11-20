@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: kibugs-admin
@@ -18,3 +19,5 @@ dubbo:
     check: false
 api:
   prifix: admin/server
+server:
+  port: 8082

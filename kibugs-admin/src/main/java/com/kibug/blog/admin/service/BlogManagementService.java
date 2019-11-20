@@ -24,7 +24,7 @@ public class BlogManagementService {
         IPage<KbBlog> page = new Page<>();
         page.setCurrent(current).setSize(pageSize);
 
-        CommonResponse<IPage<KbBlog>> response = kbBlogDubboService.indexPage(page);
+        CommonResponse<IPage<KbBlog>> response = kbBlogDubboService.indexPage(page,null);
         return CommonResponse.success(response.getData());
     }
 }

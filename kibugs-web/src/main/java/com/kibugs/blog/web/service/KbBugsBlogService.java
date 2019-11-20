@@ -55,10 +55,8 @@ public class KbBugsBlogService {
      */
     public void indexPage(ModelAndView modelAndView) {
         CompletableFuture<Void> blogAndCategoryTop5Future = CompletableFuture.runAsync(() -> {
-            IPage<KbBlog> page = new Page<>(1, 30);
-            CommonResponse<IPage<KbBlog>> commonResponse = kbBlogDubboService.indexPage(page);
-            IPage<KbBlog> data = commonResponse.getData();
-            modelAndView.addObject("page", data);
+            IPage<KbBlog> blogLimit30 = listBlogLimit30(null);
+            modelAndView.addObject("page",blogLimit30);
         }).thenRunAsync(() -> modelAndView.addObject("categoryTop5", categoryService.getCategoryTop5())).whenComplete((r, e) -> {
             if (e == null) {
                 log.info("首页加载完成");
@@ -84,6 +82,15 @@ public class KbBugsBlogService {
             log.info("首页加载ExecutionException异常", e);
         }
 
+    }
+
+    /**
+     * 获取前30博客
+     */
+    public IPage<KbBlog> listBlogLimit30(KbBlog blog) {
+        IPage<KbBlog> page = new Page<>(1, 30);
+        CommonResponse<IPage<KbBlog>> commonResponse = kbBlogDubboService.indexPage(page,blog);
+        return commonResponse.getData();
     }
 
 

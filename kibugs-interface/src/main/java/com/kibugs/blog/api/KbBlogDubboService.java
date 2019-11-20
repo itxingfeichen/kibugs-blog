@@ -18,6 +18,7 @@ public interface KbBlogDubboService {
 
     /**
      * 根据id获取博客数据
+     *
      * @param id
      * @return
      */
@@ -26,13 +27,15 @@ public interface KbBlogDubboService {
 
     /**
      * 获取首页分页数据
+     *
      * @param page
      * @return
      */
-    CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page);
+    CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page, KbBlog blog);
 
     /**
      * 获取首页推荐数据
+     *
      * @return
      */
     CommonResponse<List<KbBlog>> indexRecommend();
@@ -40,6 +43,7 @@ public interface KbBlogDubboService {
 
     /**
      * 博客发布
+     *
      * @param commonRequest
      * @return
      */

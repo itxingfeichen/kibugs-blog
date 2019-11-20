@@ -22,6 +22,13 @@ public interface KbBlogCategoryDubboService<T> extends IService<T> {
      */
     CommonResponse<List<Map<String,Integer>>> getCategoryTop5();
 
+
+    /**
+     * 获取所有分类
+     * @return
+     */
+    CommonResponse<List<Map<String, Integer>>> getAllCategory();
+
     /**
      * 分页获取分类数据
      * @param page 分页条件

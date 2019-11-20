@@ -34,4 +34,14 @@ public class KbCategoryServiceImpl extends ServiceImpl<KbCategoryMapper, KbCateg
     public List<Map<String, Integer>> getCategoryTop5() {
         return categoryMapper.getCategoryTop5();
     }
+
+
+    /**
+     * 获取所有分类
+     * @return
+     */
+    @Override
+    public List<Map<String, Integer>> getAllCategory() {
+        return categoryMapper.getAllCategory();
+    }
 }

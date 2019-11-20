@@ -21,4 +21,10 @@ public interface IKbCategoryService extends IService<KbCategory> {
      */
     List<Map<String,Integer>> getCategoryTop5();
 
+    /**
+     * 获取所有分类
+     * @return
+     */
+    List<Map<String, Integer>> getAllCategory();
+
 }

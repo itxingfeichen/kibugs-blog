@@ -30,7 +30,7 @@ import java.util.stream.Stream;
  */
 @Service(version = "1.0.0")
 @AllArgsConstructor
-public class KbBlogDubboServiceImpl  implements KbBlogDubboService {
+public class KbBlogDubboServiceImpl implements KbBlogDubboService {
 
     private final IKbBlogService blogService;
 
@@ -89,7 +89,7 @@ public class KbBlogDubboServiceImpl  implements KbBlogDubboService {
 
         });
         try {
-            CompletableFuture.allOf(future,completableFuture).get();
+            CompletableFuture.allOf(future, completableFuture).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -104,8 +104,8 @@ public class KbBlogDubboServiceImpl  implements KbBlogDubboService {
     }
 
     @Override
-    public CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page) {
-        IPage<KbBlog> iPage = blogService.lambdaQuery().eq(KbBlog::getPublishStatus, 1).orderByDesc(KbBlog::getUpdateTime).page(page);
+    public CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page, KbBlog blog) {
+        IPage<KbBlog> iPage = blogService.page(page, Wrappers.lambdaQuery(blog).orderByDesc(KbBlog::getUpdateTime));
         List<KbBlog> records = iPage.getRecords();
         if (CollectionUtils.isEmpty(records)) {
             return CommonResponse.<IPage<KbBlog>>builder().build();

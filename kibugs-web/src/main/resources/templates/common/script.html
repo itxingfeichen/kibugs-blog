@@ -26,7 +26,9 @@
             <div class="ui inverted secondary stackable menu">
                 <a th:href="@{/index}" class="item ki-mobile-hide"> <i class="icon clockwise rotated circular teal bug link big"></i></a>
                 <a th:href="@{/index}" class="item ki-mobile-hide"><i class="home mini icon"></i>首页</a>
-                <a href="aboutme.html" class="item ki-mobile-hide"><i class="info mini icon"></i>关于我</a>
+                <a th:href="@{category/index}" class="item ki-mobile-hide"><i class="idea mini icon"></i>分类</a>
+                <a th:href="@{tag/index}" class="item ki-mobile-hide"><i class="tags mini icon"></i>标签</a>
+                <a th:href="@{aboutMe/index}" class="item ki-mobile-hide"><i class="info mini icon"></i>关于我</a>
                 <div class="right menu">
                     <div class="item ki-mobile-hide" th:if="${publish != '1'}">
                         <div class="ui transparent inverted icon input">

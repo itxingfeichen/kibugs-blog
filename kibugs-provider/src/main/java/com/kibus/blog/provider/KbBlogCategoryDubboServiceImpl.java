@@ -38,6 +38,12 @@ public class KbBlogCategoryDubboServiceImpl   extends ServiceImpl<KbCategoryMapp
         return CommonResponse.<List<Map<String, Integer>>>builder().data(categoryTop5).build();
     }
 
+    @Override
+    public CommonResponse<List<Map<String, Integer>>> getAllCategory() {
+        List<Map<String, Integer>> categories= categoryService.getAllCategory();
+        return CommonResponse.<List<Map<String, Integer>>>builder().data(categories).build();
+    }
+
 
     @Override
     public CommonResponse<IPage<KbCategory>> list(IPage page, KbCategory category) {
