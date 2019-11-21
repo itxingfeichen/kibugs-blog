@@ -27,6 +27,6 @@ public interface KbTagMapper extends BaseMapper<KbTag> {
      * 获取所有标签
      * @return
      */
-    @Select({"select tag.id id,kbt.blog_id blogId, tag.name,count(kbt.tag_id) num from kb_blog_tag kbt left join kb_blog kb on kbt.blog_id=kb.id left join kb_tag tag on kbt.tag_id = tag.id where kb.delete_status=0 and kb.publish_status=1  group by kbt.tag_id;"})
-    List<Map<String, Integer>> getAllTags();
+    @Select({"select tag.id id, tag.name,count(kbt.tag_id) num from kb_blog_tag kbt left join kb_blog kb on kbt.blog_id=kb.id left join kb_tag tag on kbt.tag_id = tag.id where kb.delete_status=0 and kb.publish_status=1  group by kbt.tag_id;"})
+    List<Map<String, Object>> getAllTags();
 }

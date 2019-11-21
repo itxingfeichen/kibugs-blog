@@ -27,6 +27,6 @@ public interface IKbTagService extends IService<KbTag> {
      * 获取所有标签
      * @return
      */
-    List<Map<String, Integer>> getAllTags();
+    List<Map<String, Object>> getAllTags();
 
 }

@@ -132,13 +132,14 @@ public class KbBugsBlogService {
      * @param tagId
      */
     public void indexPageForTag(ModelAndView modelAndView, Long tagId) {
-        CommonResponse<List<Map<String, Integer>>> commonResponse = blogTagDubboService.getAllTags();
-        List<Map<String, Integer>> responseData = commonResponse.getData();
+        CommonResponse<List<Map<String, Object>>> commonResponse = blogTagDubboService.getAllTags();
+        List<Map<String, Object>> responseData = commonResponse.getData();
         IPage<KbBlogTag> page = new Page<>(1, 30);
         if (tagId == null) {
-            tagId = Long.valueOf(responseData.get(0).get("id"));
+            tagId = (Long) responseData.get(0).get("id");
         }
-        IPage<KbBlogTag> iPage = blogTagDubboService.lambdaQuery().eq(KbBlogTag::getTagId, tagId).page(page);
+
+        IPage<KbBlogTag> iPage = blogTagDubboService.listPage(page,tagId).getData();
         if (iPage != null) {
             Set<Long> collect = iPage.getRecords().stream().map(KbBlogTag::getBlogId).collect(Collectors.toSet());
             IPage<KbBlog> blogPage = new Page<>(1, 30);

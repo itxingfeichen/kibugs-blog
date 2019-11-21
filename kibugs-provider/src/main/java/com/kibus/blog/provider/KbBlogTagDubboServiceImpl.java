@@ -1,10 +1,12 @@
 package com.kibus.blog.provider;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.kibug.blog.common.entity.KbBlogTag;
 import com.kibugs.blog.api.KbBlogTagDubboService;
 import com.kibugs.blog.common.CommonResponse;
 import com.kibus.blog.mapper.KbBlogTagMapper;
+import com.kibus.blog.service.IKbBlogTagService;
 import com.kibus.blog.service.IKbTagService;
 import org.apache.dubbo.config.annotation.Service;
 
@@ -21,8 +23,11 @@ public class KbBlogTagDubboServiceImpl extends ServiceImpl<KbBlogTagMapper, KbBl
 
     private final IKbTagService tagService;
 
-    public KbBlogTagDubboServiceImpl(IKbTagService tagService) {
+    private final IKbBlogTagService blogTagService;
+
+    public KbBlogTagDubboServiceImpl(IKbTagService tagService, IKbBlogTagService blogTagService) {
         this.tagService = tagService;
+        this.blogTagService = blogTagService;
     }
 
     @Override
@@ -31,7 +36,13 @@ public class KbBlogTagDubboServiceImpl extends ServiceImpl<KbBlogTagMapper, KbBl
     }
 
     @Override
-    public CommonResponse<List<Map<String, Integer>>> getAllTags() {
-        return CommonResponse.<List<Map<String, Integer>>>builder().data(tagService.getAllTags()).build();
+    public CommonResponse<List<Map<String, Object>>> getAllTags() {
+        return CommonResponse.<List<Map<String, Object>>>builder().data(tagService.getAllTags()).build();
+    }
+
+    @Override
+    public CommonResponse<IPage<KbBlogTag>> listPage(IPage page, Long tagId) {
+        IPage<KbBlogTag> iPage = blogTagService.lambdaQuery().eq(KbBlogTag::getTagId, tagId).page(page);
+        return CommonResponse.success(iPage);
     }
 }

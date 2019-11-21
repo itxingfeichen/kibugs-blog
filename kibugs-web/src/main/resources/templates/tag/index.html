@@ -18,12 +18,12 @@
                     <h3 class="ui teal header">标签</h3>
                 </div>
                 <div class="right aligned column">
-                    共<h2 class="ui orange header ki-text-block ki-text-thin"> 14 </h2> 篇
+                    共<h2 class="ui orange header ki-text-block ki-text-thin" th:text="${page.total}"> 14 </h2> 篇
                 </div>
             </div>
         </div>
         <div class="ui attached segment ki-padded-tb-large ki-margin-bottom-tiny ki-shadow-small">
-            <a th:href="@{/blog/kb-tag(tagId=${tag.id})}" th:each="tag : ${tags}" target="_blank" class="ui teal basic left pointing large label ki-margin-tb-tiny">
+            <a th:href="@{/blog/kb-tag/index(tagId=${tag.id})}" th:each="tag : ${tags}" th:classappend="${tag.id == currentTag} ? 'teal' : ''" class="ui basic button left pointing large label ki-margin-tb-tiny">
                 <span th:text="${tag.name}">方法论</span>
                 <div class="detail" th:text="${tag.num}">23</div>
             </a>

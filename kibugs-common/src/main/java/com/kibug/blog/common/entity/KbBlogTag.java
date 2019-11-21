@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -20,7 +21,7 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 @TableName("kb_blog_tag")
-public class KbBlogTag extends Model<KbBlogTag> {
+public class KbBlogTag extends Model<KbBlogTag> implements Serializable {
 
     private static final long serialVersionUID=1L;
 

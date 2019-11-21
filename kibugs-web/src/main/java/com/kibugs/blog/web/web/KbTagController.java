@@ -28,14 +28,14 @@ public class KbTagController {
     /**
      * 跳转到分类首页
      *
-     * @param categoryId 分类ID
-     * @param tagId      标签ID
+     * @param tagId 标签ID
      * @return ModelAndView
      */
     @RequestMapping("index")
-    public ModelAndView toIndex(@RequestParam(value = "categoryId", required = false) Long categoryId, @RequestParam(value = "tagId", required = false) Long tagId) {
+    public ModelAndView toIndex(@RequestParam(value = "tagId", required = false) Long tagId) {
         ModelAndView modelAndView = new ModelAndView("/tag/index");
         blogService.indexPageForTag(modelAndView, tagId);
+        modelAndView.addObject("currentTag",tagId);
         return modelAndView;
     }
 

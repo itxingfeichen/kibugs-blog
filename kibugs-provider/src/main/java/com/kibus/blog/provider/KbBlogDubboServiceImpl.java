@@ -108,7 +108,7 @@ public class KbBlogDubboServiceImpl implements KbBlogDubboService {
     public CommonResponse<IPage<KbBlog>> indexPage(IPage<KbBlog> page, KbBlog blog, Set<Long> ids) {
         IPage<KbBlog> iPage;
         if (blog != null) {
-            iPage =  blogService.page(page, Wrappers.lambdaQuery(blog).orderByDesc(KbBlog::getUpdateTime));
+            iPage =  blogService.page(page, Wrappers.lambdaQuery(blog).orderByDesc(KbBlog::getUpdateTime,KbBlog::getCategoryId));
         }
         else if(!CollectionUtils.isEmpty(ids)){
             iPage =   blogService.page(page, Wrappers.<KbBlog>lambdaQuery().in(KbBlog::getId,ids).orderByDesc(KbBlog::getUpdateTime));

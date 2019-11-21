@@ -33,7 +33,7 @@ public class KbTagServiceImpl extends ServiceImpl<KbTagMapper, KbTag> implements
     }
 
     @Override
-    public List<Map<String, Integer>> getAllTags() {
+    public List<Map<String, Object>> getAllTags() {
         return tagMapper.getAllTags();
     }
 }
