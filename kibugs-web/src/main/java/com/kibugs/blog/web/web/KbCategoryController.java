@@ -37,7 +37,7 @@ public class KbCategoryController extends BaseController {
     public ModelAndView toIndex(@RequestParam(value = "categoryId", required = false) Long categoryId) {
         ModelAndView modelAndView = new ModelAndView("/category/index");
         blogService.indexPageForCategory(modelAndView, categoryId);
-        modelAndView.addObject("currentCategory",categoryId);
+
         return modelAndView;
     }
 

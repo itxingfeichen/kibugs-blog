@@ -41,7 +41,7 @@ public class KbCategoryServiceImpl extends ServiceImpl<KbCategoryMapper, KbCateg
      * @return
      */
     @Override
-    public List<Map<String, Integer>> getAllCategory() {
+    public List<Map<String, Object>> getAllCategory() {
         return categoryMapper.getAllCategory();
     }
 }

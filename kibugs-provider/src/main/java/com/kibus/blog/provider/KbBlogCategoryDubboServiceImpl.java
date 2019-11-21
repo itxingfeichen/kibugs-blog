@@ -39,9 +39,9 @@ public class KbBlogCategoryDubboServiceImpl extends ServiceImpl<KbCategoryMapper
     }
 
     @Override
-    public CommonResponse<List<Map<String, Integer>>> getAllCategory() {
-        List<Map<String, Integer>> categories = categoryService.getAllCategory();
-        return CommonResponse.<List<Map<String, Integer>>>builder().data(categories).build();
+    public CommonResponse<List<Map<String, Object>>> getAllCategory() {
+        List<Map<String, Object>> categories = categoryService.getAllCategory();
+        return CommonResponse.<List<Map<String, Object>>>builder().data(categories).build();
     }
 
 

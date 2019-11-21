@@ -106,23 +106,19 @@ public class KbBugsBlogService {
      */
     public void indexPageForCategory(ModelAndView modelAndView, Long categoryId) {
 
-        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
-            KbBlog blog = new KbBlog();
-            blog.setCategoryId(categoryId);
-            IPage<KbBlog> kbBlogIPage = listBlogLimit30(blog);
-            modelAndView.addObject("page", kbBlogIPage);
-        }).thenRunAsync(() -> {
-            // 获取所有分类
-            CommonResponse<List<Map<String, Integer>>> allCategory = blogCategoryDubboService.getAllCategory();
-            modelAndView.addObject("categories", allCategory.getData());
-        });
-        try {
-            future.get();
-        } catch (InterruptedException e) {
-            log.info("分类首页加载InterruptedException异常", e);
-        } catch (ExecutionException e) {
-            log.info("分类首页加载ExecutionException异常", e);
+        // 获取所有分类
+        CommonResponse<List<Map<String, Object>>> allCategory = blogCategoryDubboService.getAllCategory();
+        List<Map<String, Object>> data = allCategory.getData();
+        modelAndView.addObject("categories", data);
+        if (categoryId == null) {
+            categoryId = Long.valueOf(data.get(0).get("id") + "");
         }
+        KbBlog blog = new KbBlog();
+        blog.setCategoryId(categoryId);
+        IPage<KbBlog> kbBlogIPage = listBlogLimit30(blog);
+        modelAndView.addObject("currentCategory", categoryId);
+        modelAndView.addObject("page", kbBlogIPage);
+
     }
 
     /**
@@ -139,13 +135,14 @@ public class KbBugsBlogService {
             tagId = (Long) responseData.get(0).get("id");
         }
 
-        IPage<KbBlogTag> iPage = blogTagDubboService.listPage(page,tagId).getData();
+        IPage<KbBlogTag> iPage = blogTagDubboService.listPage(page, tagId).getData();
         if (iPage != null) {
             Set<Long> collect = iPage.getRecords().stream().map(KbBlogTag::getBlogId).collect(Collectors.toSet());
             IPage<KbBlog> blogPage = new Page<>(1, 30);
             CommonResponse<IPage<KbBlog>> response = kbBlogDubboService.indexPage(blogPage, null, collect);
             modelAndView.addObject("page", response.getData());
         }
+        modelAndView.addObject("currentTag", tagId);
         modelAndView.addObject("tags", responseData);
 
 

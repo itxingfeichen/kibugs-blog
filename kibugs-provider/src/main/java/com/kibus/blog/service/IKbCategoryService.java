@@ -25,6 +25,6 @@ public interface IKbCategoryService extends IService<KbCategory> {
      * 获取所有分类
      * @return
      */
-    List<Map<String, Integer>> getAllCategory();
+    List<Map<String, Object>> getAllCategory();
 
 }

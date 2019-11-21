@@ -27,7 +27,7 @@ public interface KbBlogCategoryDubboService<T> extends IService<T> {
      * 获取所有分类
      * @return
      */
-    CommonResponse<List<Map<String, Integer>>> getAllCategory();
+    CommonResponse<List<Map<String, Object>>> getAllCategory();
 
     /**
      * 分页获取分类数据

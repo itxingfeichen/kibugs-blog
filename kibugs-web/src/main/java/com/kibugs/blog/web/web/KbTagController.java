@@ -35,7 +35,7 @@ public class KbTagController {
     public ModelAndView toIndex(@RequestParam(value = "tagId", required = false) Long tagId) {
         ModelAndView modelAndView = new ModelAndView("/tag/index");
         blogService.indexPageForTag(modelAndView, tagId);
-        modelAndView.addObject("currentTag",tagId);
+
         return modelAndView;
     }
 
