@@ -174,13 +174,13 @@
                         <div class="ui two column grid">
                             <div class="column"><i class="idea icon"></i>分类</div>
                             <div class="column right aligned">
-                                <a href="#" target="_blank">more <i class="icon angle double right"></i></a>
+                                <a th:href="@{/blog/kb-category/index}">更多分类 <i class="icon angle double right"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="ui teal segment">
                         <div class="ui fluid vertical menu">
-                            <a href="#" class="item" th:each="category : ${categoryTop5}">
+                            <a th:href="@{/blog/kb-category/index(categoryId=${category.id})}" class="item" th:each="category : ${categoryTop5}">
                                 <span th:text="${category.name}">学习日志</span>
                                 <div class="ui teal basic left pointing label" th:text="${category.num}">
                                     13
@@ -198,12 +198,12 @@
                                 <i class="tags icon"></i>标签
                             </div>
                             <div class="right aligned column">
-                                <a href="#" target="_blank">more <i class="angle double right icon"></i></a>
+                                <a th:href="@{/blog/kb-tag/index}">更多标签 <i class="angle double right icon"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="ui teal segment">
-                        <a href="#" target="_blank" class="ui teal basic left pointing label ki-margin-tb-tiny"
+                        <a th:href="@{/blog/kb-tag/index(tagId=${tag.id})}" class="ui teal basic left pointing label ki-margin-tb-tiny"
                            th:each="tag : ${tagTop10}">
                             <span th:text="${tag.name}">方法论</span>
                             <div class="detail" th:text="${tag.num}">23</div>
