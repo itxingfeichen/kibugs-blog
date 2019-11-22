@@ -117,7 +117,7 @@ public class KbBugsBlogService {
         KbBlog blog = new KbBlog();
         blog.setCategoryId(categoryId);
         IPage<KbBlog> kbBlogIPage = listBlogLimit30(blog,1);
-        modelAndView.addObject("currentCategory", categoryId);
+        modelAndView.addObject("currenIndex", categoryId);
         modelAndView.addObject("page", kbBlogIPage);
 
     }
@@ -143,7 +143,7 @@ public class KbBugsBlogService {
             CommonResponse<IPage<KbBlog>> response = kbBlogDubboService.indexPage(blogPage, null, collect);
             modelAndView.addObject("page", response.getData());
         }
-        modelAndView.addObject("currentTag", tagId);
+        modelAndView.addObject("currenIndex", tagId);
         modelAndView.addObject("tags", responseData);
 
 
@@ -153,7 +153,7 @@ public class KbBugsBlogService {
      * 获取前30博客
      */
     public IPage<KbBlog> listBlogLimit30(KbBlog blog,Integer current) {
-        IPage<KbBlog> page = new Page<>(current, 30);
+        IPage<KbBlog> page = new Page<>(current, 5);
         CommonResponse<IPage<KbBlog>> commonResponse = kbBlogDubboService.indexPage(page, blog, null);
         return commonResponse.getData();
     }
@@ -191,7 +191,7 @@ public class KbBugsBlogService {
                 kbBlog.setCategoryId(objectId);
                 return CommonResponse.success(listBlogLimit30(kbBlog, current));
             case TAG_PAGE:
-                IPage<KbBlogTag> iPage = new Page<>(current,30);
+                IPage<KbBlogTag> iPage = new Page<>(current,30,false);
                 iPage = blogTagDubboService.listPage(iPage, objectId).getData();
                 if (iPage != null) {
                     Set<Long> collect = iPage.getRecords().stream().map(KbBlogTag::getBlogId).collect(Collectors.toSet());

@@ -148,7 +148,7 @@
 
                             </div>
                             <div class="ui five wide column">
-                                <a href="@{/blog/detail/{id}(id=${blog.id})}" target="_blank">
+                                <a th:href="@{/blog/detail/{id}(id=${blog.id})}" target="_blank">
                                     <img th:src="@{${blog.firstImageUrl}}" alt="" class="ui rounded image ki-padded-tb-big ki-text-thin" style="width:800px;height:200px">
                                 </a>
 
@@ -157,12 +157,12 @@
                     </div>
                 </div>
                 <!--footer-->
-                <div class="ui bottom attached segment">
+                <div class="ui bottom attached segment" id="loadMoreDiv" th:if="${page.total >5}">
                     <div class="ui middle aligned column grid">
                         <div class="column">
                             <input type="hidden" id="current" th:value="${page.current}"/>
-                            <input type="hidden" id="objectId" th:value="current"/>
-                            <button id="loadMoreId"   class="ui fluid inline teal button" th:onclick="'javascript:Index.loadMore(\'index\')'">加载更多</button>
+                            <input type="hidden" id="objectId" th:value="${currenIndex}"/>
+                            <button id="loadMoreId"   class="ui fluid inline teal button" th:onclick="'javascript:Index.loadMore(\'INDEX\')'">加载更多</button>
                         </div>
                     </div>
                 </div>

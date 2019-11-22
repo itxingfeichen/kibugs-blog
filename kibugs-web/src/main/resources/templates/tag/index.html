@@ -23,14 +23,14 @@
             </div>
         </div>
         <div class="ui attached segment ki-padded-tb-large ki-margin-bottom-tiny ki-shadow-small">
-            <a th:href="@{/blog/kb-tag/index(tagId=${tag.id})}" th:each="tag : ${tags}" th:classappend="${tag.id == currentTag} ? 'teal' : ''" class="ui basic button left pointing large label ki-margin-tb-tiny">
+            <a th:href="@{/blog/kb-tag/index(tagId=${tag.id})}" th:each="tag : ${tags}" th:classappend="${tag.id == currenIndex} ? 'teal' : ''" class="ui basic button left pointing large label ki-margin-tb-tiny">
                 <span th:text="${tag.name}">方法论</span>
                 <div class="detail" th:text="${tag.num}">23</div>
             </a>
 
         </div>
         <!--博客内容区-->
-        <div class="ui top attached teal segment">
+        <div  id="data-content" class="ui top attached teal segment">
             <div class="ui padded segment vertical ki-padded-tb-large ki-padded-lr-response ki-padded-tb-large ki-padded-lr-clear"
                  th:each="blog : ${page.records}">
                 <div class="ui mobile reversed stackable grid">
@@ -69,7 +69,7 @@
 
                     </div>
                     <div class="ui five wide column">
-                        <a href="@{/blog/detail/{id}(id=${blog.id})}" target="_blank">
+                        <a th:href="@{/blog/detail/{id}(id=${blog.id})}" target="_blank">
                             <img th:src="@{${blog.firstImageUrl}}" alt="" class="ui rounded image ki-padded-tb-big ki-text-thin" style="width:800px;height:200px">
                         </a>
 
@@ -79,10 +79,12 @@
             </div>
         </div>
         <!--加载更多-->
-        <div class="ui bottom attached segment">
+        <div class="ui bottom attached segment" id="loadMoreDiv" th:if="${page.total >5}">
             <div class="ui middle aligned column grid">
                 <div class="column">
-                    <button class="fluid ui teal button">加载更多</button>
+                    <input type="hidden" id="current" th:value="${page.current}"/>
+                    <input type="hidden" id="objectId" th:value="${currenIndex}"/>
+                    <button id="loadMoreId"   class="ui fluid inline teal button" th:onclick="'javascript:Index.loadMore(\'TAG_PAGE\')'">加载更多</button>
                 </div>
             </div>
         </div>
@@ -101,6 +103,7 @@
         position: "bottom center"
     });
 </script>
+<script th:src="@{/js/index.js}"></script>
 <script>
     $("#payBtn").popup({
         popup: $(".ki-pay-area"),

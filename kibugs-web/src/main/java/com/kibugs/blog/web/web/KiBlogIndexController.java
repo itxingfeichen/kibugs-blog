@@ -58,12 +58,15 @@ public class KiBlogIndexController extends BaseController {
     public CommonResponse loadMore(Integer current, PageType type, Long objectId) {
 
         log.info("params={},{}", current, type);
-        final CommonResponse<IPage<KbBlog>> commonResponse = kiBugsBlogService.loadMore(type, current, objectId);
+        final CommonResponse<IPage<KbBlog>> commonResponse = kiBugsBlogService.loadMore(type, current+1, objectId);
         final IPage<KbBlog> page = commonResponse.getData();
+        if (page == null) {
+            return CommonResponse.success();
+        }
         final List<KbBlog> records = page.getRecords();
         final StringBuilder result = new StringBuilder();
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        if(CollectionUtils.isEmpty(records)){
+        if(!CollectionUtils.isEmpty(records)){
             records.forEach(kbBlog -> result.append("<div class=\"ui padded segment vertical ki-padded-tb-large ki-padded-lr-response ki-padded-tb-large ki-padded-lr-clear\">\n")
                     .append("<div class=\"ui mobile reversed stackable grid\">\n").append("<div class=\"eleven wide column\">\n").append("<h3 class=\"ui header\">\n")
                     .append("<a href=\"/blog/detail/1\" class=\"header\">标题</a></h3>\n")

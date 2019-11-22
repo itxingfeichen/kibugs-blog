@@ -24,13 +24,13 @@
         <div class="ui attached segment ki-padded-tb-large ki-margin-bottom-tiny ki-shadow-small">
             <div class="ui labeled button ki-margin-bottom-small" th:each="category : ${categories}">
                 <div class=""></div>
-                <a th:href="@{/blog/kb-category/index(categoryId=${category.id})}" th:classappend="${category.id == currentCategory} ? 'teal' : ''" class="ui basic button" th:text="${category.name}">思考与感悟</a>
-                <div th:classappend="${category.id == currentCategory} ? 'teal' : ''" class="ui basic left pointing label" th:text="${category.num}">23</div>
+                <a th:href="@{/blog/kb-category/index(categoryId=${category.id})}" th:classappend="${category.id == currenIndex} ? 'teal' : ''" class="ui basic button" th:text="${category.name}">思考与感悟</a>
+                <div th:classappend="${category.id == currenIndex} ? 'teal' : ''" class="ui basic left pointing label" th:text="${category.num}">23</div>
             </div>
 
         </div>
         <!--博客内容区-->
-        <div class="ui top attached teal segment">
+        <div id="data-content" class="ui top attached teal segment">
             <div class="ui padded segment vertical ki-padded-tb-large ki-padded-lr-response ki-padded-tb-large ki-padded-lr-clear"
                  th:each="blog : ${page.records}">
                 <div class="ui mobile reversed stackable grid">
@@ -69,7 +69,7 @@
 
                     </div>
                     <div class="ui five wide column">
-                        <a href="@{/blog/detail/{id}(id=${blog.id})}" target="_blank">
+                        <a th:href="@{/blog/detail/{id}(id=${blog.id})}" target="_blank">
                             <img th:src="@{${blog.firstImageUrl}}" alt="" class="ui rounded image ki-padded-tb-big ki-text-thin" style="width:800px;height:200px">
                         </a>
 
@@ -80,10 +80,12 @@
         </div>
 
 
-        <div class="ui bottom attached segment">
+        <div class="ui bottom attached segment" id="loadMoreDiv" th:if="${page.total >5}">
             <div class="ui middle aligned column grid">
                 <div class="column">
-                    <button class="fluid ui teal button">加载更多</button>
+                    <input type="hidden" id="current" th:value="${page.current}"/>
+                    <input type="hidden" id="objectId" th:value="${currenIndex}"/>
+                    <button id="loadMoreId"   class="ui fluid inline teal button" th:onclick="'javascript:Index.loadMore(\'CATEGORY_PAGE\')'">加载更多</button>
                 </div>
             </div>
         </div>
@@ -101,5 +103,6 @@
         position: "bottom center"
     });
 </script>
+<script th:src="@{/js/index.js}"></script>
 </body>
 </html>

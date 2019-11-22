@@ -10,12 +10,19 @@ Index = {
         $("#loadMoreId").attr("disabled", true);
         var current = $("#current").val();
         var objectId = $("#objectId").val();
-        $.get("/loadMore", {'current': current + 1, 'type': type, 'objectId': objectId}, function (res) {
-            $("#data-content").append(res.data);
-            $("#loadMoreId").removeClass("loader")
-            $("#loadMoreId").attr("disabled", false);
-            $("#loadMoreId").text("加载更多");
+        $.get("/loadMore", {'current': current, 'type': type, 'objectId': objectId}, function (res) {
+            $("#loadMoreId").removeClass("loader");
+            if(!res.data){
+                $("#loadMoreId").text("没有啦，要不您去写点儿吧...");
+            }else{
+                $("#data-content").append(res.data);
+                $("#loadMoreId").attr("disabled", false);
+                $("#current").val(Number(current)+1)
+                $("#loadMoreId").text("加载更多");
+            }
+
         })
+
 
     }
 
