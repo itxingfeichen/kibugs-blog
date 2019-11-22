@@ -153,7 +153,7 @@ public class KbBugsBlogService {
      * 获取前30博客
      */
     public IPage<KbBlog> listBlogLimit30(KbBlog blog,Integer current) {
-        IPage<KbBlog> page = new Page<>(current, 5);
+        IPage<KbBlog> page = new Page<>(current, 30);
         CommonResponse<IPage<KbBlog>> commonResponse = kbBlogDubboService.indexPage(page, blog, null);
         return commonResponse.getData();
     }
