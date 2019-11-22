@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.kibug.blog.common.dto.KbBlogDTO;
 import com.kibug.blog.common.dto.KbBlogPublishDTO;
 import com.kibug.blog.common.entity.*;
+import com.kibug.blog.common.enums.PageType;
 import com.kibug.blog.common.form.KbBlogPublishForm;
 import com.kibugs.blog.api.KbBlogCategoryDubboService;
 import com.kibugs.blog.api.KbBlogDubboService;
@@ -69,7 +70,7 @@ public class KbBugsBlogService {
      */
     public void indexPage(ModelAndView modelAndView) {
         CompletableFuture<Void> blogAndCategoryTop5Future = CompletableFuture.runAsync(() -> {
-            IPage<KbBlog> blogLimit30 = listBlogLimit30(null);
+            IPage<KbBlog> blogLimit30 = listBlogLimit30(null,1);
             modelAndView.addObject("page", blogLimit30);
         }).thenRunAsync(() -> modelAndView.addObject("categoryTop5", categoryService.getCategoryTop5())).whenComplete((r, e) -> {
             if (e == null) {
@@ -115,7 +116,7 @@ public class KbBugsBlogService {
         }
         KbBlog blog = new KbBlog();
         blog.setCategoryId(categoryId);
-        IPage<KbBlog> kbBlogIPage = listBlogLimit30(blog);
+        IPage<KbBlog> kbBlogIPage = listBlogLimit30(blog,1);
         modelAndView.addObject("currentCategory", categoryId);
         modelAndView.addObject("page", kbBlogIPage);
 
@@ -151,8 +152,8 @@ public class KbBugsBlogService {
     /**
      * 获取前30博客
      */
-    public IPage<KbBlog> listBlogLimit30(KbBlog blog) {
-        IPage<KbBlog> page = new Page<>(1, 30);
+    public IPage<KbBlog> listBlogLimit30(KbBlog blog,Integer current) {
+        IPage<KbBlog> page = new Page<>(current, 30);
         CommonResponse<IPage<KbBlog>> commonResponse = kbBlogDubboService.indexPage(page, blog, null);
         return commonResponse.getData();
     }
@@ -171,6 +172,37 @@ public class KbBugsBlogService {
         kbBlogPublishDTO.setCustomerId(currentCustomer.getId());
         CommonRequest<KbBlogPublishDTO> commonRequest = CommonRequest.<KbBlogPublishDTO>builder().data(kbBlogPublishDTO).build();
         return kbBlogDubboService.publishBlog(commonRequest);
+    }
+
+    /**
+     * 加载更多
+     *
+     * @param type     类型（1：首页；2：分类首页；3：标签首页）
+     * @param current
+     * @param objectId
+     * @return
+     */
+    public CommonResponse<IPage<KbBlog>> loadMore(PageType type, Integer current, Long objectId) {
+        switch (type) {
+            case INDEX:
+                return CommonResponse.success(listBlogLimit30(null, current));
+            case CATEGORY_PAGE:
+                final KbBlog kbBlog = new KbBlog();
+                kbBlog.setCategoryId(objectId);
+                return CommonResponse.success(listBlogLimit30(kbBlog, current));
+            case TAG_PAGE:
+                IPage<KbBlogTag> iPage = new Page<>(current,30);
+                iPage = blogTagDubboService.listPage(iPage, objectId).getData();
+                if (iPage != null) {
+                    Set<Long> collect = iPage.getRecords().stream().map(KbBlogTag::getBlogId).collect(Collectors.toSet());
+                    IPage<KbBlog> blogPage = new Page<>(1, 30);
+                    return kbBlogDubboService.indexPage(blogPage, null, collect);
+                }
+            default:
+                break;
+        }
+        return CommonResponse.success();
+
     }
 
 
