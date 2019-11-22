@@ -160,7 +160,9 @@
                 <div class="ui bottom attached segment">
                     <div class="ui middle aligned column grid">
                         <div class="column">
-                            <button id="loadMoreId"   class="ui fluid inline teal button" th:onclick="'javascript:Index.loadMore(\''+${page.current}+'\',\'index\')'">加载更多</button>
+                            <input type="hidden" id="current" th:value="${page.current}"/>
+                            <input type="hidden" id="objectId" th:value="current"/>
+                            <button id="loadMoreId"   class="ui fluid inline teal button" th:onclick="'javascript:Index.loadMore(\'index\')'">加载更多</button>
                         </div>
                     </div>
                 </div>
